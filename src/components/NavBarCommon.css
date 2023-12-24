@@ -1,0 +1,15 @@
+#offcanvasNavbar-expand-false {
+  background-color: #030E34;
+  width: 20%;
+}
+
+#offcanvasNavbar-expand-false .nav-link {
+  color: white;
+  font-size: 17px;
+  font-family: 'Open Sans', sans-serif;
+}
+
+#offcanvasNavbar-expand-false .navbar-brand {
+  color: white;
+  font-weight: bold;
+}
