@@ -10,7 +10,7 @@ export default function NavBarCommon() {
 
     return (
         <div>
-            <Navbar key={expand} expand={expand} className="bg-body-tertiary mb-3">
+            <Navbar key={expand} expand={expand} bg="dark" data-bs-theme="dark">
                 <Container fluid>
                     <Navbar.Brand href="/dashboard">Eye Care</Navbar.Brand>
                     <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />

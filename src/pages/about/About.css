@@ -1,0 +1,13 @@
+.aboutContainer {
+    margin-top: 30px;
+    text-align: center;
+}
+
+.aboutRow {
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: white;
+    width: 70%;
+    height: 70vh;
+    margin-bottom: 50px;
+}
