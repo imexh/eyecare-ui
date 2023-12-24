@@ -1,0 +1,31 @@
+body {
+    background-color: #DBD7F8;
+}
+
+.dashboardCards {
+    background-color: white;
+    border-radius: 10px;
+    flex: 1;
+}
+
+.dashboardDivCardsPanel {
+    margin-top: 30px;
+}
+
+.dashboardFirstRow {
+    background-color: white;
+    border-radius: 10px;
+}
+
+.dashboardSecondRow .dashboardCards {
+    height: 200px;
+}
+
+.dashboardThirdRow .dashboardCards {
+    height: 200px;
+}
+
+.dashboardForthRow .dashboardCards {
+    height: 200px;
+    margin-bottom: 100px;
+}
