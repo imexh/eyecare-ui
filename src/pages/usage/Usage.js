@@ -6,6 +6,7 @@ export default function Usage() {
     <div>
       <NavBarCommon />
       <h1>Usage Reports</h1>
+      <p>Under construction....</p>
     </div>
   )
 }

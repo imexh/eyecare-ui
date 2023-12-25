@@ -1,10 +1,35 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import './Signup.css';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import authService from "../../services/auth.service";
 
 export default function Signup() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+
+  const Navigate = useNavigate();
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+    try {
+      await authService.createAccount(username, email, password, confirmPassword).then(
+        () => {
+          Navigate("/login");
+          window.location.reload();
+        },
+        (error) => {
+          alert(error.response.data.message)
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <div>
       <div className="container-fluid">
@@ -15,22 +40,22 @@ export default function Signup() {
               <p className="subtitle">Create a new account</p>
             </div>
             <div className="secondRow">
-              <Form>
+              <Form onSubmit={handleSignup}>
                 <Form.Group className="mb-3" controlId="formGroupUsername">
                   <Form.Label>Username</Form.Label>
-                  <Form.Control type="text" placeholder="Enter username" />
+                  <Form.Control type="text" placeholder="Enter username" onChange={(e) => setUsername(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formGroupEmail">
                   <Form.Label>Email</Form.Label>
-                  <Form.Control type="email" placeholder="Enter email" />
+                  <Form.Control type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formGroupPassword">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
+                  <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formGroupConfirmPassword">
                   <Form.Label>Confirm Password</Form.Label>
-                  <Form.Control type="password" placeholder="Confirm Password" />
+                  <Form.Control type="password" placeholder="Confirm Password" onChange={(e) => setConfirmPassword(e.target.value)} />
                 </Form.Group>
                 <div className="loginButtonDiv">
                   <Button className="loginButton" variant="primary" type="submit">Signup</Button>
