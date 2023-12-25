@@ -1,11 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "react-bootstrap";
 import Form from 'react-bootstrap/Form';
 import './Login.css';
 import { Link, useNavigate } from "react-router-dom";
+import authService from "../../services/auth.service";
 
 export default function Login() {
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
   const Navigate = useNavigate();
+
+  const handleLogin = async (e) => {
+    e.preventDefault();
+    try {
+      await authService.login(username, password).then(
+        () => {
+          Navigate("/dashboard");
+          window.location.reload();
+        },
+        (error) => {
+          alert(error.response.data.message)
+        }
+      );
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
   return (
     <div>
@@ -17,17 +38,17 @@ export default function Login() {
               <p className="subtitle">Log in to your account</p>
             </div>
             <div className="loginPageSecondRow">
-              <Form>
+              <Form onSubmit={handleLogin}>
                 <Form.Group className="mb-3" controlId="formGroupUsername">
                   <Form.Label>Username</Form.Label>
-                  <Form.Control type="text" placeholder="Enter username" />
+                  <Form.Control type="text" placeholder="Enter username" onChange={(e) => setUsername(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formGroupPassword">
                   <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" />
+                  <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                 </Form.Group>
                 <div className="loginButtonDiv">
-                  <Button className="loginButton" variant="primary" type="submit" onClick={() => Navigate("/dashboard")}>Login</Button>
+                  <Button className="loginButton" variant="primary" type="submit">Login</Button>
                 </div>
               </Form>
             </div>

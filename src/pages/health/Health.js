@@ -6,6 +6,7 @@ export default function Health() {
     <div>
       <NavBarCommon />
       <h1>Health Tips</h1>
+      <p>Under construction....</p>
     </div>
   )
 }
