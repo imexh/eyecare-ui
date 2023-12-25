@@ -6,6 +6,7 @@ export default function CVSHome() {
     <div>
       <NavBarCommon></NavBarCommon>
       <h1>CVS Home</h1>
+      <p>Under construction....</p>
     </div>
   )
 }
