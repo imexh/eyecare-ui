@@ -13,6 +13,7 @@ import Health from './pages/health/Health';
 import Usage from './pages/usage/Usage';
 import CVSHome from './pages/cvs/cvs_home/CVSHome';
 import CVSInput from './pages/cvs/cvs_input/CVSInput';
+import CameraComponent from './components/Camera';
 
 function App() {
   return (
@@ -33,6 +34,7 @@ function App() {
             <Route path='/usage' element={<Usage />} />
             <Route path='/cvs-home' element={<CVSHome />} />
             <Route path='/cvs-input' element={<CVSInput />} />
+            <Route path='/camera' element={<CameraComponent/>} />
           </Routes>
         </div>
       </Router>

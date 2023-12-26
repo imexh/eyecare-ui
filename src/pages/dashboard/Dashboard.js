@@ -6,6 +6,7 @@ import { Container } from 'react-bootstrap';
 import FooterCommon from '../../components/FooterCommon';
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
+import CameraComponent from '../../components/Camera';
 
 export default function Dashboard() {
   const [username, setUsername] = useState([""]);
@@ -48,7 +49,9 @@ export default function Dashboard() {
           <Stack direction="horizontal" className='dashboardSecondRow' gap={3}>
             <div className="p-2 card dashboardCards">Current Distance to the screen</div>
             <div className="p-2 card dashboardCards">Status Critical</div>
-            <div className="p-2 card dashboardCards">Camera</div>
+            <div className="p-2 card dashboardCards">
+              Camera
+            </div>
           </Stack>
           <Stack direction="horizontal" className='dashboardThirdRow' gap={3}>
             <div className="p-2 card dashboardCards">Interaction Time</div>
