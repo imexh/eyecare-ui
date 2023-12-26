@@ -50,7 +50,7 @@ export default function Dashboard() {
             <div className="p-2 card dashboardCards">Current Distance to the screen</div>
             <div className="p-2 card dashboardCards">Status Critical</div>
             <div className="p-2 card dashboardCards">
-              Camera
+              <CameraComponent/>
             </div>
           </Stack>
           <Stack direction="horizontal" className='dashboardThirdRow' gap={3}>
