@@ -7,6 +7,7 @@ import FooterCommon from '../../components/FooterCommon';
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import CameraComponent from '../../components/CameraWithoutMesh';
+import postService from '../../services/post.service';
 
 export default function Dashboard() {
   const [username, setUsername] = useState([""]);
@@ -82,10 +83,18 @@ export default function Dashboard() {
       }, 1000);
     } else if (eyeInteraction === "No") {
       innerTimer = setInterval(() => {
+        if (interactionTime !== 0) {
+          postService.addInteractionTimeCalculations(username, date, interactionTime);
+        }
+
         clearInterval(timer);
         setInteractionTime(0);
       }, 5000);
     } else {
+      if (interactionTime !== 0) {
+        postService.addInteractionTimeCalculations(username, date, interactionTime);
+      }
+
       clearInterval(timer);
       setInteractionTime(0);
     }
@@ -94,7 +103,8 @@ export default function Dashboard() {
       clearInterval(timer);
       clearInterval(innerTimer);
     };
-  }, [eyeInteraction]);
+
+  }, [eyeInteraction, interactionTime, date, username]);
 
   // Function to calculate interaction time (Without 5 seconds timer to reset)
   // useEffect(() => {
@@ -113,6 +123,7 @@ export default function Dashboard() {
   // }, [isCameraActive]);
 
   // Function to format seconds to minutes and hours
+
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);

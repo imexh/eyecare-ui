@@ -30,13 +30,29 @@ const addAccountDetails = (username, name, birthday, contactNo, email) => {
     );
 };
 
+const addDistanceCalculations = (username, date, averageDistance) => {
+    return axios.post(API_URL + "/addDistance",
+        { username, date, averageDistance },
+        { headers: authHeader() }
+    );
+};
+
+const addInteractionTimeCalculations = (username, date, interactionTime) => {
+    return axios.post(API_URL + "/addInteractionTime",
+        { username, date, interactionTime },
+        { headers: authHeader() }
+    );
+};
+
 const postService = {
     getHelpText,
     getContacts,
     getAboutText,
     getContactDetails,
     getUserDetails,
-    addAccountDetails
+    addAccountDetails,
+    addDistanceCalculations,
+    addInteractionTimeCalculations
 };
 
 export default postService;
