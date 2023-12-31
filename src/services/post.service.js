@@ -1,7 +1,8 @@
 import axios from "axios";
 import authHeader from "./auth.header";
+import URL from '../config';
 
-const API_URL = "http://localhost:8080/api/user";
+const API_URL = URL + "/api/user";
 
 const getHelpText = () => {
     return axios.get(API_URL + "/help/view", { headers: authHeader() });
