@@ -17,6 +17,8 @@ export default function Dashboard() {
   const [elapsedTime, setElapsedTime] = useState(0.0);
   const [eyeInteraction, setEyeInteraction] = useState("No");
   const [interactionTime, setInteractionTime] = useState(0.0);
+  const [distancesDuringInteraction, setDistancesDuringInteraction] = useState([]);
+
 
   const navigate = useNavigate();
 
@@ -84,6 +86,8 @@ export default function Dashboard() {
     } else if (eyeInteraction === "No") {
       innerTimer = setInterval(() => {
         if (interactionTime !== 0) {
+          const avgDistance = distancesDuringInteraction.reduce((sum, dist) => sum + dist, 0) / distancesDuringInteraction.length;
+          postService.addDistanceCalculations(username, date, avgDistance);
           postService.addInteractionTimeCalculations(username, date, interactionTime);
         }
 
@@ -92,6 +96,8 @@ export default function Dashboard() {
       }, 5000);
     } else {
       if (interactionTime !== 0) {
+        const avgDistance = distancesDuringInteraction.reduce((sum, dist) => sum + dist, 0) / distancesDuringInteraction.length;
+        postService.addDistanceCalculations(username, date, avgDistance);
         postService.addInteractionTimeCalculations(username, date, interactionTime);
       }
 
@@ -103,7 +109,7 @@ export default function Dashboard() {
       clearInterval(timer);
       clearInterval(innerTimer);
     };
-
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eyeInteraction, interactionTime, date, username]);
 
   // Function to calculate interaction time (Without 5 seconds timer to reset)
@@ -136,6 +142,7 @@ export default function Dashboard() {
 
   // Function to change distance according to the calculations in the component
   const handleDistanceChange = (newDistance) => {
+    setDistancesDuringInteraction((prevDistances) => newDistance > 0 ? [...prevDistances, newDistance] : prevDistances);
     setDistance(newDistance);
   };
 
