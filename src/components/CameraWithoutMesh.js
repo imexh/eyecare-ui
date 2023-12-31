@@ -5,10 +5,12 @@ function CameraComponent({ onDistanceChange }) {
 
     const [modelsLoaded, setModelsLoaded] = React.useState(false);
     const [captureVideo, setCaptureVideo] = React.useState(false);
+    const [videoDimensions, setVideoDimensions] = React.useState({
+        height: 480,
+        width: 640,
+    });
 
     const videoRef = React.useRef();
-    const videoHeight = 480;
-    const videoWidth = 640;
     const canvasRef = React.useRef();
 
     React.useEffect(() => {
@@ -31,13 +33,18 @@ function CameraComponent({ onDistanceChange }) {
     const startVideo = () => {
         setCaptureVideo(true);
         navigator.mediaDevices
-            .getUserMedia({ video: { width: 300 } })
+            .getUserMedia({ video: { width: 300 } }) // Controls the size of video
             .then(stream => {
                 let video = videoRef.current;
                 video.srcObject = stream;
 
                 video.onloadedmetadata = () => {
                     video.play();
+
+                    setVideoDimensions({
+                        height: video.videoHeight,
+                        width: video.videoWidth,
+                    });
                 };
             })
             .catch(err => {
@@ -47,8 +54,8 @@ function CameraComponent({ onDistanceChange }) {
 
     const handleVideoOnPlay = async () => {
         const displaySize = {
-            width: videoWidth,
-            height: videoHeight
+            width: videoDimensions.width,
+            height: videoDimensions.height
         };
 
         faceapi.matchDimensions(canvasRef.current, displaySize);
@@ -59,7 +66,7 @@ function CameraComponent({ onDistanceChange }) {
                     const detections = await faceapi.detectAllFaces(videoRef.current, new faceapi.TinyFaceDetectorOptions()).withFaceLandmarks().withFaceExpressions();
                     const resizedDetections = faceapi.resizeResults(detections, displaySize);
 
-                    canvasRef.current.getContext('2d').clearRect(0, 0, videoWidth, videoHeight);
+                    canvasRef.current.getContext('2d').clearRect(0, 0, videoDimensions.width, videoDimensions.height);
 
                     var distance = 0.0;
 
@@ -68,8 +75,8 @@ function CameraComponent({ onDistanceChange }) {
                     }
 
                     // faceapi.draw.drawDetections(canvasRef.current, resizedDetections); // UNCOMMENT TO SHOW DETECTION BOX
-                    faceapi.draw.drawFaceLandmarks(canvasRef.current, resizedDetections);
-                    showDistanceOnCanvas(canvasRef, distance, { x: 10, y: 30 });
+                    // faceapi.draw.drawFaceLandmarks(canvasRef.current, resizedDetections);
+                    // showDistanceOnCanvas(canvasRef, distance, { x: 10, y: 30 });
                     onDistanceChange(distance);
                 }
             } catch (err) {
@@ -82,6 +89,7 @@ function CameraComponent({ onDistanceChange }) {
         requestAnimationFrame(processVideoFrame);
     };
 
+    // eslint-disable-next-line no-unused-vars
     function showDistanceOnCanvas(canvasRef, value, position, fontSize = 20, textColor = 'white', bgColor = 'black') {
         const canvas = canvasRef.current;
         const ctx = canvas.getContext('2d');
@@ -112,7 +120,7 @@ function CameraComponent({ onDistanceChange }) {
         const averageHumanFaceWidth = 6.3; // In centimeters (Need to be accurate)
         const focalLength = 610; // Estimated focal length of the camera (Changes with camera)
 
-        return (averageHumanFaceWidth * focalLength) / distanceBetweenEyes + 30
+        return (averageHumanFaceWidth * focalLength) / distanceBetweenEyes + 25; // Change 25 to a correct value (Nodejs is 30)
     }
 
     return (
@@ -121,8 +129,9 @@ function CameraComponent({ onDistanceChange }) {
                 captureVideo ?
                     modelsLoaded ?
                         <div>
-                            <div style={{ display: 'flex', justifyContent: 'center', padding: '10px' }}>
-                                <video ref={videoRef} height={videoHeight} width={videoWidth} onPlay={handleVideoOnPlay} style={{ borderRadius: '10px' }} />
+                            <div>
+                                {/* <video ref={videoRef} height={videoDimensions.height} width={videoDimensions.width} onPlay={handleVideoOnPlay} style={{ borderRadius: '10px' }} /> */}
+                                <video ref={videoRef} onPlay={handleVideoOnPlay} style={{ borderRadius: '10px' }} />
                                 <canvas ref={canvasRef} style={{ position: 'absolute' }} />
                             </div>
                         </div>
