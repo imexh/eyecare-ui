@@ -8,4 +8,6 @@ Install axios: npm install axios
 
 Install face-api: npm install react-webcam face-api.js
 
+Install chart.js: npm install chart.js react-chartjs-2
+
 Change URL in auth.service.js and post.service.js files

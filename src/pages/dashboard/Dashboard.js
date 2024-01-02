@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import CameraComponent from '../../components/CameraWithoutMesh';
 import postService from '../../services/post.service';
+import BarChart from '../../components/charts/BarChart';
 
 export default function Dashboard() {
   const [username, setUsername] = useState([""]);
@@ -19,6 +20,10 @@ export default function Dashboard() {
   const [interactionTime, setInteractionTime] = useState(0.0);
   const [distancesDuringInteraction, setDistancesDuringInteraction] = useState([]);
 
+  // TODO: Get values from APIs
+  const labels = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
+  const distanceData = [50.5, 60.2, 40.9, 80.2, 90.2, 35.1, 45.5];
+  const interactionData = [2000, 3000, 1500, 1000, 6000, 4000, 3000];
 
   const navigate = useNavigate();
 
@@ -179,8 +184,12 @@ export default function Dashboard() {
             <div className="p-2 card dashboardCards w-50">Eyes Interacting? {eyeInteraction}</div>
           </Stack>
           <Stack direction="horizontal" className='dashboardForthRow' gap={3}>
-            <div className="p-2 card dashboardCards">Graph</div>
-            <div className="p-2 card dashboardCards w-50">Graph</div>
+            <div className="p-2 card dashboardCards">
+              <BarChart title={"Weekly average distance"} chartLabels={labels} yLabel={"Average Distance (cm)"} chartData={distanceData} />
+            </div>
+            <div className="p-2 card dashboardCards w-50">
+              <BarChart title={"Weekly interaction times"} chartLabels={labels} yLabel={"Interaction Time (sec)"} chartData={interactionData} />
+            </div>
           </Stack>
         </Stack>
       </Container>
