@@ -2,31 +2,31 @@ import React from 'react'
 import { Chart as ChartJS } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 
-export default function LineChart() {
+export default function LineChart(props) {
     return (
         <div>
             <Line
                 data={{
-                    labels: ["A", "B", "C"],
+                    labels: props.chartLabels,
                     datasets: [
                         {
-                            label: "Revenue",
-                            data: [200, 300, 400],
+                            label: props.yLabel1,
+                            data: props.chartData1
                         },
                         {
-                            label: "Loss",
-                            data: [90, 80, 70],
+                            label: props.yLabel2,
+                            data: props.chartData2
                         }
                     ]
                 }}
                 options={{
                     plugins: {
-                      title: {
-                        display: true,
-                        text: 'Distances used this week',
-                      },
+                        title: {
+                            display: true,
+                            text: props.title,
+                        },
                     },
-                  }}
+                }}
             />
         </div>
     )

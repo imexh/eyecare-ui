@@ -236,7 +236,7 @@ export default function Dashboard() {
           </Stack>
           <Stack direction="horizontal" className='dashboardForthRow' gap={3}>
             <div className="p-2 card dashboardCards">
-              <BarChart title={"Weekly average distance"} chartLabels={labels} yLabel={"Average Distance (cm)"} chartData={distanceData} />
+              <BarChart title={"Weekly average distances"} chartLabels={labels} yLabel={"Average Distance (cm)"} chartData={distanceData} />
             </div>
             <div className="p-2 card dashboardCards w-50">
               <BarChart title={"Weekly interaction times"} chartLabels={labels} yLabel={"Interaction Time (sec)"} chartData={interactionData} />

@@ -39,7 +39,7 @@ export default function NavBarCommon() {
                                 <Nav.Link href="/dashboard">Dashboard</Nav.Link>
                                 <Nav.Link href="/cvs-home">CVS Test ....</Nav.Link>
                                 <Nav.Link href="/health">Health Tips ....</Nav.Link>
-                                <Nav.Link href="usage">Usage Reports ....</Nav.Link>
+                                <Nav.Link href="usage">Usage Reports</Nav.Link>
                                 <Nav.Link href="/profile">Profile</Nav.Link>
                                 <Nav.Link href="/settings">Settings ....</Nav.Link>
                                 <Nav.Link href="/help">Help</Nav.Link>
