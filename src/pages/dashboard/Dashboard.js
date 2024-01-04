@@ -20,10 +20,9 @@ export default function Dashboard() {
   const [interactionTime, setInteractionTime] = useState(0.0);
   const [distancesDuringInteraction, setDistancesDuringInteraction] = useState([]);
 
-  // TODO: Get values from APIs
-  const labels = ["Sun", "Mon", "Tue", "Wed", "Thur", "Fri", "Sat"];
-  const distanceData = [50.5, 60.2, 40.9, 80.2, 90.2, 35.1, 45.5];
-  const interactionData = [2000, 3000, 1500, 1000, 6000, 4000, 3000];
+  const [labels, setLabels] = useState(["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]);
+  const [distanceData, setDistanceData] = useState([]);
+  const [interactionData, setInteractionData] = useState([]);
 
   const navigate = useNavigate();
 
@@ -47,6 +46,58 @@ export default function Dashboard() {
       }
     };
     fetchData();
+  }, [navigate]);
+
+  // Function to populate graphs
+  useEffect(() => {
+    if (AuthService.getCurrentUser() == null) {
+      navigate("/login");
+    } else {
+      const currentUser = AuthService.getCurrentUser().username;
+      postService.getWeeklyDistances(currentUser)
+        .then((response) => {
+          const keysArray = [];
+          const valuesArray = [];
+
+          for (const [key, value] of Object.entries(response.data.distances)) {
+            keysArray.push(key);
+            valuesArray.push(value);
+          }
+
+          setDistanceData(valuesArray);
+          setLabels(keysArray);
+        })
+        .catch((error) => {
+          console.log("Private page", error.response);
+          if (error.response && error.response.status === 403) {
+            AuthService.logout();
+            navigate("/login");
+            window.location.reload();
+          }
+        });
+
+      postService.getWeeklyInteractionTimes(currentUser)
+        .then((response) => {
+          const keysArray = [];
+          const valuesArray = [];
+
+          for (const [key, value] of Object.entries(response.data.interactionTimes)) {
+            keysArray.push(key);
+            valuesArray.push(value);
+          }
+
+          setInteractionData(valuesArray);
+          setLabels(keysArray);
+        })
+        .catch((error) => {
+          console.log("Private page", error.response);
+          if (error.response && error.response.status === 403) {
+            AuthService.logout();
+            navigate("/login");
+            window.location.reload();
+          }
+        });
+    }
   }, [navigate]);
 
   // Function to calculate time elapsed
