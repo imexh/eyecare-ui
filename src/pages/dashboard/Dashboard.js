@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import NavBarCommon from '../../components/NavBarCommon'
-import Stack from 'react-bootstrap/Stack';
 import "./Dashboard.css";
-import { Button, Container } from 'react-bootstrap';
+import { Button, Container, Row, Col } from 'react-bootstrap';
 import FooterCommon from '../../components/FooterCommon';
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
@@ -132,15 +131,26 @@ export default function Dashboard() {
 
   // Function to calculate interaction time (Gives 5 seconds time before reseting)
   useEffect(() => {
-    let timer;
-    let innerTimer;
+    try {
+      let timer;
+      let innerTimer;
 
-    if (eyeInteraction === "Yes") {
-      timer = setInterval(() => {
-        setInteractionTime((prevInteractionTime) => prevInteractionTime + 1);
-      }, 1000);
-    } else if (eyeInteraction === "No") {
-      innerTimer = setInterval(() => {
+      if (eyeInteraction === "Yes") {
+        timer = setInterval(() => {
+          setInteractionTime((prevInteractionTime) => prevInteractionTime + 1);
+        }, 1000);
+      } else if (eyeInteraction === "No") {
+        innerTimer = setInterval(() => {
+          if (interactionTime !== 0) {
+            const avgDistance = distancesDuringInteraction.reduce((sum, dist) => sum + dist, 0) / distancesDuringInteraction.length;
+            postService.addDistanceCalculations(username, date, avgDistance);
+            postService.addInteractionTimeCalculations(username, date, interactionTime);
+          }
+
+          clearInterval(timer);
+          setInteractionTime(0);
+        }, 5000);
+      } else {
         if (interactionTime !== 0) {
           const avgDistance = distancesDuringInteraction.reduce((sum, dist) => sum + dist, 0) / distancesDuringInteraction.length;
           postService.addDistanceCalculations(username, date, avgDistance);
@@ -149,22 +159,16 @@ export default function Dashboard() {
 
         clearInterval(timer);
         setInteractionTime(0);
-      }, 5000);
-    } else {
-      if (interactionTime !== 0) {
-        const avgDistance = distancesDuringInteraction.reduce((sum, dist) => sum + dist, 0) / distancesDuringInteraction.length;
-        postService.addDistanceCalculations(username, date, avgDistance);
-        postService.addInteractionTimeCalculations(username, date, interactionTime);
       }
 
-      clearInterval(timer);
-      setInteractionTime(0);
+      return () => {
+        clearInterval(timer);
+        clearInterval(innerTimer);
+      };
+    } catch (error) {
+      console.log(error);
     }
 
-    return () => {
-      clearInterval(timer);
-      clearInterval(innerTimer);
-    };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eyeInteraction, interactionTime, date, username]);
 
@@ -205,44 +209,88 @@ export default function Dashboard() {
   // Function to toggle camera ON and OFF
   const toggleCamera = () => {
     setCameraActive(prevState => !prevState);
+    setDistance(0.0)
   };
 
   return (
     <div>
       <NavBarCommon />
-      <Container className='dashboardDivCardsPanel'>
+      <Container className='dashboard-container'>
         <h1>Dashboard</h1>
-        <Stack className="dashboardCardsPanel h-100" gap={3}>
-          <Stack direction="horizontal" className='dashboardFirstRow' gap={3}>
-            <div className="p-2 dashboardCards">Date: {date}</div>
-            <div className="p-2 dashboardCards">Time Elapsed: {formatTime(elapsedTime)}</div>
-            <div className="p-2 dashboardCards">User: {username}</div>
-          </Stack>
-          <Stack direction="horizontal" className='dashboardSecondRow' gap={3}>
-            <div className="p-2 card dashboardCards">Current Distance to the screen: {distance.toFixed(2)} cm</div>
-            <div className="p-2 card dashboardCards">Status Critical</div>
-            <div className="p-2 card dashboardCards">
+        <Row className='mb-3'>
+          <Col xs={12}>
+            <div className="p-2 card">
+              <Row className='font-dashboard-text'>
+                <Col>
+                  <div className='p-2'><b>Date:</b> <i>{date}</i></div>
+                </Col>
+                <Col>
+                  <div className='p-2'><b>Time Elapsed:</b> <i>{formatTime(elapsedTime)}</i></div>
+                </Col>
+                <Col>
+                  <div className='p-2'><b>User:</b> <i>{username}</i></div>
+                </Col>
+              </Row>
+            </div>
+          </Col>
+        </Row>
+
+        <Row className='mb-3 custom-row-dashboard font-dashboard-text'>
+          <Col>
+            <div className="p-2 card custom-row-dashboard">
+              <div className='p-2'><b>Current Distance to the screen:</b> {distance.toFixed(2)} cm</div>
+            </div>
+          </Col>
+          <Col>
+            <div className="p-2 card custom-row-dashboard">
+              <div className='p-2'><b>Interaction Time:</b> {formatTime(interactionTime)}</div>
+            </div>
+          </Col>
+          <Col>
+            <div className="p-2 card custom-row-dashboard d-flex justify-content-center">
               <Button onClick={toggleCamera}>
                 {isCameraActive ? "Stop Camera" : "Start Camera"}
               </Button>
-              {isCameraActive && (
+            </div>
+          </Col>
+        </Row>
+
+        <Row className='mb-3 font-dashboard-text'>
+          <Col>
+            <div className="p-2 card custom-row-camera-dashboard text-center d-flex align-items-center justify-content-center">
+              <p className='font-dashboard-text-answers-topic'>Eyes Interacting?</p>
+              <p className='font-dashboard-text-answers'>{eyeInteraction}</p>
+            </div>
+          </Col>
+          <Col>
+            <div className="p-2 card custom-row-camera-dashboard text-center d-flex align-items-center justify-content-center dashboard-red-card">
+              <p className='font-dashboard-text-answers-topic'>Status</p>
+              <p className='font-dashboard-text-answers'>Critical</p>
+            </div>
+          </Col>
+          <Col>
+            <div className="p-2 card d-flex align-items-center justify-content-center custom-row-camera-dashboard dashboard-grey-card">
+              {isCameraActive ? (
                 <CameraComponent onDistanceChange={handleDistanceChange} />
+              ) : (
+                <img src={'images/cameracard.png'} alt="Camera" />
               )}
             </div>
-          </Stack>
-          <Stack direction="horizontal" className='dashboardThirdRow' gap={3}>
-            <div className="p-2 card dashboardCards">Interaction Time: {formatTime(interactionTime)}</div>
-            <div className="p-2 card dashboardCards w-50">Eyes Interacting? {eyeInteraction}</div>
-          </Stack>
-          <Stack direction="horizontal" className='dashboardForthRow' gap={3}>
-            <div className="p-2 card dashboardCards">
-              <BarChart title={"Weekly average distances"} chartLabels={labels} yLabel={"Average Distance (cm)"} chartData={distanceData} />
+          </Col>
+        </Row>
+
+        <Row className='mb-5' >
+          <Col>
+            <div className="p-2 card">
+              <BarChart title={"Weekly Distance Report (Average)"} chartLabels={labels} yLabel={"Average Distance (cm)"} chartData={distanceData} />
             </div>
-            <div className="p-2 card dashboardCards w-50">
-              <BarChart title={"Weekly interaction times"} chartLabels={labels} yLabel={"Interaction Time (sec)"} chartData={interactionData} />
+          </Col>
+          <Col>
+            <div className="p-2 card">
+              <BarChart title={"Weekly Interaction Time Report"} chartLabels={labels} yLabel={"Interaction Time (sec)"} chartData={interactionData} />
             </div>
-          </Stack>
-        </Stack>
+          </Col>
+        </Row>
       </Container>
       <FooterCommon />
     </div>

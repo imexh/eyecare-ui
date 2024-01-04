@@ -3,6 +3,8 @@ import { Chart as ChartJS } from "chart.js/auto";
 import { Line } from "react-chartjs-2";
 
 export default function LineChart(props) {
+    const openSansFont = "'Open Sans', sans-serif";
+
     return (
         <div>
             <Line
@@ -24,6 +26,12 @@ export default function LineChart(props) {
                         title: {
                             display: true,
                             text: props.title,
+                            font: {
+                                family: openSansFont,
+                                weight: 'bold',
+                                size: 20
+                            },
+                            color: 'black'
                         },
                     },
                 }}

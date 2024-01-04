@@ -1,31 +1,48 @@
 body {
     background-color: #DBD7F8;
+    font-family: 'Open Sans', sans-serif;
+    overflow-x: hidden;
 }
 
-.dashboardCards {
-    background-color: white;
-    border-radius: 10px;
-    flex: 1;
+h1 {
+    font-weight: bold;
+    margin-bottom: 20px;
+    margin-top: 50px;
 }
 
-.dashboardDivCardsPanel {
-    margin-top: 30px;
+.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.dashboardFirstRow {
-    background-color: white;
-    border-radius: 10px;
+.dashboard-container {
+    margin-bottom: 70px;
 }
 
-.dashboardSecondRow .dashboardCards {
-    height: 350px;
+.custom-row-camera-dashboard {
+    height: 250px;
 }
 
-.dashboardThirdRow .dashboardCards {
-    /* height: 200px; */
+.custom-row-dashboard {
+    height: 60px;
 }
 
-.dashboardForthRow .dashboardCards {
-    /* height: 200px; */
-    margin-bottom: 100px;
+.font-dashboard-text {
+    font-size: 18px;
+}
+
+.font-dashboard-text-answers {
+    font-weight: bold;
+    font-size: 50px;
+}
+
+.font-dashboard-text-answers-topic {
+    font-size: 30px;
+}
+
+.dashboard-red-card {
+    background-color: red;
+}
+
+.dashboard-grey-card {
+    background-color: #999999;
 }
