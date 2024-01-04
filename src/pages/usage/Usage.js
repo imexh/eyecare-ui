@@ -20,6 +20,8 @@ export default function Usage() {
   const [monthlyInteractionData, setMonthlyInteractionData] = useState([]);
 
   const [weeklyLineLabels, setWeeklyLineLabels] = useState(["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]);
+  const [previousWeeklyDistanceData, setPreviousWeeklyDistanceData] = useState([]);
+  const [previousWeeklyInteractionData, setPreviousWeeklyInteractionData] = useState([]);
 
   const navigate = useNavigate();
 
@@ -72,6 +74,48 @@ export default function Usage() {
             window.location.reload();
           }
         });
+
+        postService.getPreviousWeeklyDistances(currentUser)
+        .then((response) => {
+          const keysArray = [];
+          const valuesArray = [];
+
+          for (const [key, value] of Object.entries(response.data.distances)) {
+            keysArray.push(key);
+            valuesArray.push(value);
+          }
+
+          setPreviousWeeklyDistanceData(valuesArray);
+        })
+        .catch((error) => {
+          console.log("Private page", error.response);
+          if (error.response && error.response.status === 403) {
+            AuthService.logout();
+            navigate("/login");
+            window.location.reload();
+          }
+        });
+
+        postService.getPreviousWeeklyInteractionTimes(currentUser)
+        .then((response) => {
+          const keysArray = [];
+          const valuesArray = [];
+
+          for (const [key, value] of Object.entries(response.data.interactionTimes)) {
+            keysArray.push(key);
+            valuesArray.push(value);
+          }
+
+          setPreviousWeeklyInteractionData(valuesArray);
+        })
+        .catch((error) => {
+          console.log("Private page", error.response);
+          if (error.response && error.response.status === 403) {
+            AuthService.logout();
+            navigate("/login");
+            window.location.reload();
+          }
+        });
     }
   }, [navigate]);
 
@@ -81,7 +125,7 @@ export default function Usage() {
       navigate("/login");
     } else {
       const currentUser = AuthService.getCurrentUser().username;
-      // Change implementation in post.service.js
+
       postService.getMonthlyDistances(currentUser)
         .then((response) => {
           const keysArray = [];
@@ -104,7 +148,6 @@ export default function Usage() {
           }
         });
 
-      // Change implementation in post.service.js
       postService.getMonthlyInteractionTimes(currentUser)
         .then((response) => {
           const keysArray = [];
@@ -147,17 +190,22 @@ export default function Usage() {
             <div className="p-2 card usageCards">
               <BarChart title={"Monthly Average Distances"} chartLabels={monthlyLabels} yLabel={"Average Distance (cm)"} chartData={monthlyDistanceData} />
             </div>
+          </Stack>
+          <Stack direction="horizontal" gap={3}>
             <div className="p-2 card usageCards">
               <BarChart title={"Monthly Interaction Times"} chartLabels={monthlyLabels} yLabel={"Interaction Time (sec)"} chartData={monthlyInteractionData} />
             </div>
           </Stack>
-          {/* Change to line graphs and add 4 weeks on month */}
           <Stack direction="horizontal" className='usageForthRow' gap={3}>
             <div className="p-2 card usageCards">
-              <LineChart title={"Distances"} chartLabels={weeklyLineLabels} yLabel1={"Average Distance (cm)"} chartData1={weeklyInteractionData} />
+              <LineChart title={"Distances"} chartLabels={weeklyLineLabels}
+                yLabel1={"This Week (cm)"} chartData1={weeklyDistanceData}
+                yLabel2={"Previous Week (cm)"} chartData2={previousWeeklyDistanceData} />
             </div>
             <div className="p-2 card usageCards">
-              <LineChart title={"Interaction Times"} chartLabels={weeklyLineLabels} yLabel1={"Interaction Time (sec)"} chartData1={weeklyInteractionData} />
+              <LineChart title={"Interaction Times"} chartLabels={weeklyLineLabels}
+                yLabel1={"This Week (sec)"} chartData1={weeklyInteractionData}
+                yLabel2={"Previous Week (sec)"} chartData2={previousWeeklyInteractionData} />
             </div>
           </Stack>
         </Stack>

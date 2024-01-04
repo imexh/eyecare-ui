@@ -54,11 +54,19 @@ const getWeeklyInteractionTimes = (username) => {
 };
 
 const getMonthlyDistances = (username) => {
-    return axios.get(API_URL + "/weekly/distances", { params: { username }, headers: authHeader() });
+    return axios.get(API_URL + "/monthly/distances", { params: { username }, headers: authHeader() });
 };
 
 const getMonthlyInteractionTimes = (username) => {
-    return axios.get(API_URL + "/weekly/interactionTimes", { params: { username }, headers: authHeader() });
+    return axios.get(API_URL + "/monthly/interactionTimes", { params: { username }, headers: authHeader() });
+};
+
+const getPreviousWeeklyDistances = (username) => {
+    return axios.get(API_URL + "/previous/weekly/distances", { params: { username }, headers: authHeader() });
+};
+
+const getPreviousWeeklyInteractionTimes = (username) => {
+    return axios.get(API_URL + "/previous/weekly/interactionTimes", { params: { username }, headers: authHeader() });
 };
 
 const postService = {
@@ -73,7 +81,9 @@ const postService = {
     getWeeklyDistances,
     getWeeklyInteractionTimes,
     getMonthlyDistances,
-    getMonthlyInteractionTimes
+    getMonthlyInteractionTimes,
+    getPreviousWeeklyDistances,
+    getPreviousWeeklyInteractionTimes
 };
 
 export default postService;
