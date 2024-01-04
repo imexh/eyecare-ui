@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
 import CameraComponent from '../../components/CameraWithoutMesh';
 import postService from '../../services/post.service';
+import BarChart from '../../components/charts/BarChart';
 
 export default function Dashboard() {
   const [username, setUsername] = useState([""]);
@@ -19,6 +20,9 @@ export default function Dashboard() {
   const [interactionTime, setInteractionTime] = useState(0.0);
   const [distancesDuringInteraction, setDistancesDuringInteraction] = useState([]);
 
+  const [labels, setLabels] = useState(["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]);
+  const [distanceData, setDistanceData] = useState([]);
+  const [interactionData, setInteractionData] = useState([]);
 
   const navigate = useNavigate();
 
@@ -42,6 +46,58 @@ export default function Dashboard() {
       }
     };
     fetchData();
+  }, [navigate]);
+
+  // Function to populate graphs
+  useEffect(() => {
+    if (AuthService.getCurrentUser() == null) {
+      navigate("/login");
+    } else {
+      const currentUser = AuthService.getCurrentUser().username;
+      postService.getWeeklyDistances(currentUser)
+        .then((response) => {
+          const keysArray = [];
+          const valuesArray = [];
+
+          for (const [key, value] of Object.entries(response.data.distances)) {
+            keysArray.push(key);
+            valuesArray.push(value);
+          }
+
+          setDistanceData(valuesArray);
+          setLabels(keysArray);
+        })
+        .catch((error) => {
+          console.log("Private page", error.response);
+          if (error.response && error.response.status === 403) {
+            AuthService.logout();
+            navigate("/login");
+            window.location.reload();
+          }
+        });
+
+      postService.getWeeklyInteractionTimes(currentUser)
+        .then((response) => {
+          const keysArray = [];
+          const valuesArray = [];
+
+          for (const [key, value] of Object.entries(response.data.interactionTimes)) {
+            keysArray.push(key);
+            valuesArray.push(value);
+          }
+
+          setInteractionData(valuesArray);
+          setLabels(keysArray);
+        })
+        .catch((error) => {
+          console.log("Private page", error.response);
+          if (error.response && error.response.status === 403) {
+            AuthService.logout();
+            navigate("/login");
+            window.location.reload();
+          }
+        });
+    }
   }, [navigate]);
 
   // Function to calculate time elapsed
@@ -179,8 +235,12 @@ export default function Dashboard() {
             <div className="p-2 card dashboardCards w-50">Eyes Interacting? {eyeInteraction}</div>
           </Stack>
           <Stack direction="horizontal" className='dashboardForthRow' gap={3}>
-            <div className="p-2 card dashboardCards">Graph</div>
-            <div className="p-2 card dashboardCards w-50">Graph</div>
+            <div className="p-2 card dashboardCards">
+              <BarChart title={"Weekly average distances"} chartLabels={labels} yLabel={"Average Distance (cm)"} chartData={distanceData} />
+            </div>
+            <div className="p-2 card dashboardCards w-50">
+              <BarChart title={"Weekly interaction times"} chartLabels={labels} yLabel={"Interaction Time (sec)"} chartData={interactionData} />
+            </div>
           </Stack>
         </Stack>
       </Container>
