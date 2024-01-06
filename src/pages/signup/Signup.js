@@ -67,7 +67,7 @@ export default function Signup() {
               <Link to="/login" className="signupLink">Login</Link>
             </div>
           </div>
-          <div className="col-md-8 rightDiv" style={{ backgroundImage: 'url("images/backgroundsignup.jpg")', backgroundSize: 'cover', minHeight: '100vh' }}></div>
+          <div className="col-md-8 rightDiv" style={{ backgroundImage: 'url("images/signupbackground.jpeg")', backgroundSize: 'cover', minHeight: '100vh' }}></div>
         </div>
       </div>
     </div>
