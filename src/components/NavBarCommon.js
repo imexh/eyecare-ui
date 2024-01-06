@@ -19,33 +19,47 @@ export default function NavBarCommon() {
     }
 
     return (
-        <div>
-            <Navbar key={expand} expand={expand} bg="dark" data-bs-theme="dark">
-                <Container fluid>
-                    <Navbar.Brand href="/dashboard">Eye Care</Navbar.Brand>
+        <div className="navbar-common">
+            <Navbar key={expand} expand={expand} data-bs-theme="dark">
+                <Container >
+                    <Navbar.Brand href="/dashboard">
+                        <img
+                            alt=""
+                            src="/images/eyecaresquarelogo.png"
+                            width="30"
+                            height="30"
+                            className="d-inline-block align-top navbar-common-brand-image"
+                        />{' '}
+                        <b>Eye Care</b>
+                    </Navbar.Brand>
                     <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
                     <Navbar.Offcanvas
                         id={`offcanvasNavbar-expand-${expand}`}
                         aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
-                        placement="end"
-                    >
-                        <Offcanvas.Header closeButton>
+                        placement="end">
+                        <Offcanvas.Header className='d-flex justify-content-center'>
                             <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
-                                Eye Care
+                                <img
+                                    alt=""
+                                    src="/images/eyecaresquarelogowithtext.png"
+                                    width="150"
+                                    height="150"
+                                    className="d-inline-block align-top navbar-common-brand-image"
+                                />{' '}
                             </Offcanvas.Title>
                         </Offcanvas.Header>
                         <Offcanvas.Body>
-                            <Nav className="justify-content-end flex-grow-1 pe-3">
-                                <Nav.Link href="/dashboard">Dashboard</Nav.Link>
-                                <Nav.Link href="/cvs-home">CVS Test ....</Nav.Link>
-                                <Nav.Link href="/health">Health Tips ....</Nav.Link>
-                                <Nav.Link href="usage">Usage Reports</Nav.Link>
-                                <Nav.Link href="/profile">Profile</Nav.Link>
-                                <Nav.Link href="/settings">Settings ....</Nav.Link>
-                                <Nav.Link href="/help">Help</Nav.Link>
-                                <Nav.Link href="/contacts">Contact Us</Nav.Link>
-                                <Nav.Link href="/about">About</Nav.Link>
-                                <Nav.Link onClick={handleLogout}>Logout</Nav.Link>
+                            <Nav className="justify-content-end flex-grow-1 pe-3 navbar-offcanvas-navdiv">
+                                <Nav.Link href="/dashboard" className='nav-links-navbar'>Dashboard</Nav.Link>
+                                <Nav.Link href="/cvs-home" className='nav-links-navbar'>CVS Test ....</Nav.Link>
+                                <Nav.Link href="/health" className='nav-links-navbar'>Health Tips ....</Nav.Link>
+                                <Nav.Link href="usage" className='nav-links-navbar'>Usage Reports</Nav.Link>
+                                <Nav.Link href="/profile" className='nav-links-navbar'>Profile</Nav.Link>
+                                <Nav.Link href="/settings" className='nav-links-navbar'>Settings ....</Nav.Link>
+                                <Nav.Link href="/help" className='nav-links-navbar'>Help</Nav.Link>
+                                <Nav.Link href="/contacts" className='nav-links-navbar'>Contact Us</Nav.Link>
+                                <Nav.Link href="/about" className='nav-links-navbar'>About</Nav.Link>
+                                <Nav.Link onClick={handleLogout} className='nav-links-navbar'>Logout</Nav.Link>
                             </Nav>
                         </Offcanvas.Body>
                     </Navbar.Offcanvas>

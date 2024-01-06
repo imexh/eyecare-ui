@@ -23,7 +23,7 @@ h1 {
 }
 
 .custom-row-dashboard {
-    height: 60px;
+    min-height: 60px;
 }
 
 .font-dashboard-text {
