@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import NavBarCommon from '../../components/NavBarCommon'
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import './Contacts.css';
 import FooterCommon from '../../components/FooterCommon';
 import { useNavigate } from "react-router-dom";
@@ -10,9 +11,9 @@ import AuthService from "../../services/auth.service";
 
 
 export default function Contacts() {
-  const [email, setEmail] = useState([""]);
-  const [contact, setContact] = useState([""]);
-  const [website, setWebsite] = useState([""]);
+  const [email, setEmail] = useState(["...."]);
+  const [contact, setContact] = useState(["...."]);
+  const [website, setWebsite] = useState(["...."]);
 
   const navigate = useNavigate();
 
@@ -34,19 +35,32 @@ export default function Contacts() {
   }, [navigate]);
 
   return (
-    <div>
+    <div className='contacts-background'>
       <NavBarCommon />
-      <Container className='contactsContainer'>
-        <h1>Contact Us</h1>
-        <Row className='contactsRow mx-auto'>
-          <h3>Email</h3>
-          <p>{email}</p>
-          <br></br>
-          <h3>Contact Number</h3>
-          <p>{contact}</p>
-          <br></br>
-          <h3>Website</h3>
-          <p>{website}</p>
+      <h1>Contact Us</h1>
+      <Container className='contactsContainer contactsRow mx-auto card contacts-fonts'>
+        <Row className='firstRowContacts'>
+          <Col>
+            <h3>Reach us out</h3>
+          </Col>
+        </Row>
+        <Row className='secondRowContacts'>
+          <Col>
+            <p className='text-headings-contacts'>Email</p>
+            <p className='text-details-contacts'>{email}</p>
+          </Col>
+        </Row>
+        <Row className='thirdRowContacts'>
+          <Col>
+            <p className='text-headings-contacts'>Contact No</p>
+            <p className='text-details-contacts'>{contact}</p>
+          </Col>
+        </Row>
+        <Row className='forthRowContacts'>
+          <Col>
+            <p className='text-headings-contacts'>Website</p>
+            <p className='text-details-contacts'>{website}</p>
+          </Col>
         </Row>
       </Container>
       <FooterCommon />

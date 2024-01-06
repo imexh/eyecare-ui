@@ -1,13 +1,42 @@
+.help-background {
+    text-align: center;
+}
+
 .helpContainer {
-    margin-top: 30px;
     text-align: center;
 }
 
 .helpRow {
-    margin-top: 20px;
     border-radius: 10px;
-    background-color: white;
+    background-color: #030E34;
     width: 70%;
-    height: 70vh;
-    margin-bottom: 50px;
+}
+
+.help-title-fonts {
+    color: white;
+    font-weight: bold;
+    font-size: 32px;
+}
+
+.help-inner-container {
+    border-radius: 10px;
+    background-color: #ffffff;
+    width: 100%;
+    min-height: 50vh;
+}
+
+.help-body-fonts {
+    font-size: 20px;
+}
+
+.first-row-help {
+    padding-top: 10px;
+}
+
+.second-row-help {
+    padding-top: 30px;
+}
+
+.final-div-help {
+    margin-bottom: 70px;
 }
