@@ -142,103 +142,122 @@ export default function Profile() {
   };
 
   return (
-    <div>
+    <div className='profile-background'>
       <NavBarCommon />
-      <Container className='profileAccordionContainer'>
-        <Accordion className='profileAccordion'>
-          <h1>Profile</h1>
-          <Accordion.Item eventKey="0">
-            <Accordion.Header>Name: {name}</Accordion.Header>
-            <Accordion.Body>
-              <Form onSubmit={handleChangeName}>
-                <Row className="align-items-center">
-                  <Col sm={3} className="my-1">
-                    <Form.Control id="inlineFormInputName" placeholder="New name" onChange={(e) => setNewName(e.target.value)} />
-                  </Col>
-                  <Col xs="auto" className="my-1">
-                    <Button type="submit">Change</Button>
-                  </Col>
-                </Row>
-              </Form>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="1">
-            <Accordion.Header>Username: {username}</Accordion.Header>
-            <Accordion.Body>
-              <Form onSubmit={handleChangeUsername}>
-                <Row className="align-items-center">
-                  <Col sm={3} className="my-1">
-                    <Form.Control id="inlineFormInputUsername" placeholder="New username" />
-                  </Col>
-                  <Col xs="auto" className="my-1">
-                    <Button type="submit">Change</Button>
-                  </Col>
-                </Row>
-              </Form>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="2">
-            <Accordion.Header>Email: {email}</Accordion.Header>
-            <Accordion.Body>
-              <Form onSubmit={handleChangeEmail}>
-                <Row className="align-items-center">
-                  <Col sm={3} className="my-1">
-                    <Form.Control id="inlineFormInputEmail" placeholder="New email" onChange={(e) => setNewEmail(e.target.value)} />
-                  </Col>
-                  <Col xs="auto" className="my-1">
-                    <Button type="submit">Change</Button>
-                  </Col>
-                </Row>
-              </Form>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="3">
-            <Accordion.Header>Contact No: {contact}</Accordion.Header>
-            <Accordion.Body>
-              <Form onSubmit={handleChangeContact}>
-                <Row className="align-items-center">
-                  <Col sm={3} className="my-1">
-                    <Form.Control id="inlineFormInputContact" placeholder="New contact number" onChange={(e) => setNewContact(e.target.value)} />
-                  </Col>
-                  <Col xs="auto" className="my-1">
-                    <Button type="submit">Change</Button>
-                  </Col>
-                </Row>
-              </Form>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="4">
-            <Accordion.Header>Birthday: {birthday}</Accordion.Header>
-            <Accordion.Body>
-              <Form onSubmit={handleChangeBirthday}>
-                <Row className="align-items-center">
-                  <Col sm={3} className="my-1">
-                    <Form.Control id="inlineFormInputBirthday" placeholder="New birthday" onChange={(e) => setNewBirthday(e.target.value)} />
-                  </Col>
-                  <Col xs="auto" className="my-1">
-                    <Button type="submit">Change</Button>
-                  </Col>
-                </Row>
-              </Form>
-            </Accordion.Body>
-          </Accordion.Item>
-          <Accordion.Item eventKey="5">
-            <Accordion.Header>Password</Accordion.Header>
-            <Accordion.Body>
-              <Form onSubmit={handleChangePassword}>
-                <Row className="align-items-center">
-                  <Col sm={3} className="my-1">
-                    <Form.Control id="inlineFormInputPassword" placeholder="New password" />
-                  </Col>
-                  <Col xs="auto" className="my-1">
-                    <Button type="submit">Change</Button>
-                  </Col>
-                </Row>
-              </Form>
-            </Accordion.Body>
-          </Accordion.Item>
-        </Accordion>
+      <h1>Profile</h1>
+      <Container className='profileContainer profileRow mx-auto card'>
+        <Row className='first-row-profile profile-title-fonts'>
+          <Col>
+            <p>Hello, {name}!</p>
+          </Col>
+        </Row>
+        <Row className='inner-row-profile'>
+          <Container className='profileContainer mx-auto card profile-inner-container'>
+            <Row className='second-row-profile profile-body-fonts'>
+              <Col>
+                <Container>
+                  <Accordion className='profileAccordion'>
+                    <Accordion.Item eventKey="0">
+                      <Accordion.Header><span className='profile-body-fonts'><b>Name: </b>{name}</span></Accordion.Header>
+                      <Accordion.Body>
+                        <Form onSubmit={handleChangeName}>
+                          <Row className="align-items-center">
+                            <Col sm={3} className="my-1">
+                              <Form.Control id="inlineFormInputName" placeholder="New name" onChange={(e) => setNewName(e.target.value)} />
+                            </Col>
+                            <Col xs="auto" className="my-1">
+                              <Button type="submit" className='profile-button'>Change</Button>
+                            </Col>
+                          </Row>
+                        </Form>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="1">
+                      <Accordion.Header><span className='profile-body-fonts'><b>Username: </b>{username}</span></Accordion.Header>
+                      <Accordion.Body>
+                        <Form onSubmit={handleChangeUsername}>
+                          <Row className="align-items-center">
+                            <Col sm={3} className="my-1">
+                              <Form.Control id="inlineFormInputUsername" placeholder="New username" />
+                            </Col>
+                            <Col xs="auto" className="my-1">
+                              <Button type="submit" className='profile-button'>Change</Button>
+                            </Col>
+                          </Row>
+                        </Form>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="2">
+                      <Accordion.Header><span className='profile-body-fonts'><b>Email:</b> {email}</span></Accordion.Header>
+                      <Accordion.Body>
+                        <Form onSubmit={handleChangeEmail}>
+                          <Row className="align-items-center">
+                            <Col sm={3} className="my-1">
+                              <Form.Control id="inlineFormInputEmail" placeholder="New email" onChange={(e) => setNewEmail(e.target.value)} />
+                            </Col>
+                            <Col xs="auto" className="my-1">
+                              <Button type="submit" className='profile-button'>Change</Button>
+                            </Col>
+                          </Row>
+                        </Form>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="3">
+                      <Accordion.Header><span className='profile-body-fonts'><b>Contact No: </b>{contact}</span></Accordion.Header>
+                      <Accordion.Body>
+                        <Form onSubmit={handleChangeContact}>
+                          <Row className="align-items-center">
+                            <Col sm={3} className="my-1">
+                              <Form.Control id="inlineFormInputContact" placeholder="New contact number" onChange={(e) => setNewContact(e.target.value)} />
+                            </Col>
+                            <Col xs="auto" className="my-1">
+                              <Button type="submit" className='profile-button'>Change</Button>
+                            </Col>
+                          </Row>
+                        </Form>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="4">
+                      <Accordion.Header><span className='profile-body-fonts'><b>Birthday: </b>{birthday}</span></Accordion.Header>
+                      <Accordion.Body>
+                        <Form onSubmit={handleChangeBirthday}>
+                          <Row className="align-items-center">
+                            <Col sm={3} className="my-1">
+                              <Form.Control id="inlineFormInputBirthday" placeholder="New birthday" onChange={(e) => setNewBirthday(e.target.value)} />
+                            </Col>
+                            <Col xs="auto" className="my-1">
+                              <Button type="submit" className='profile-button'>Change</Button>
+                            </Col>
+                          </Row>
+                        </Form>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                    <Accordion.Item eventKey="5">
+                      <Accordion.Header><span className='profile-body-fonts'><b>Password</b></span></Accordion.Header>
+                      <Accordion.Body>
+                        <Form onSubmit={handleChangePassword}>
+                          <Row className="align-items-center">
+                            <Col sm={3} className="my-1">
+                              <Form.Control id="inlineFormInputPassword" placeholder="Current password" />
+                            </Col>
+                            <Col sm={3} className="my-1">
+                              <Form.Control id="inlineFormInputPassword" placeholder="New password" />
+                            </Col>
+                            <Col xs="auto" className="my-1">
+                              <Button type="submit" className='profile-button'>Change</Button>
+                            </Col>
+                          </Row>
+                        </Form>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                </Container>
+              </Col>
+            </Row>
+          </Container>
+        </Row>
       </Container>
+      <div className='final-div-profile'></div>
       <FooterCommon />
     </div>
   )

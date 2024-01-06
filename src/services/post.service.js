@@ -69,6 +69,10 @@ const getPreviousWeeklyInteractionTimes = (username) => {
     return axios.get(API_URL + "/previous/weekly/interactionTimes", { params: { username }, headers: authHeader() });
 };
 
+const getHealthTips = (username) => {
+    return axios.get(API_URL + "/tips", { params: { username }, headers: authHeader() });
+};
+
 const postService = {
     getHelpText,
     getContacts,
@@ -83,7 +87,8 @@ const postService = {
     getMonthlyDistances,
     getMonthlyInteractionTimes,
     getPreviousWeeklyDistances,
-    getPreviousWeeklyInteractionTimes
+    getPreviousWeeklyInteractionTimes,
+    getHealthTips
 };
 
 export default postService;

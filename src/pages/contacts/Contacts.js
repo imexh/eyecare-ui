@@ -46,19 +46,19 @@ export default function Contacts() {
         </Row>
         <Row className='secondRowContacts'>
           <Col>
-            <p className='text-headings-contacts'>Email</p>
+            <span className='text-headings-contacts'>Email</span>
             <p className='text-details-contacts'>{email}</p>
           </Col>
         </Row>
         <Row className='thirdRowContacts'>
           <Col>
-            <p className='text-headings-contacts'>Contact No</p>
+            <span className='text-headings-contacts'>Contact No</span>
             <p className='text-details-contacts'>{contact}</p>
           </Col>
         </Row>
         <Row className='forthRowContacts'>
           <Col>
-            <p className='text-headings-contacts'>Website</p>
+            <span className='text-headings-contacts'>Website</span>
             <p className='text-details-contacts'>{website}</p>
           </Col>
         </Row>

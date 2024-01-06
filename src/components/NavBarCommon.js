@@ -51,11 +51,11 @@ export default function NavBarCommon() {
                         <Offcanvas.Body>
                             <Nav className="justify-content-end flex-grow-1 pe-3 navbar-offcanvas-navdiv">
                                 <Nav.Link href="/dashboard" className='nav-links-navbar'>Dashboard</Nav.Link>
-                                <Nav.Link href="/cvs-home" className='nav-links-navbar'>CVS Test ....</Nav.Link>
-                                <Nav.Link href="/health" className='nav-links-navbar'>Health Tips ....</Nav.Link>
+                                <Nav.Link href="/cvs-home" className='nav-links-navbar'>CVS Test</Nav.Link>
+                                <Nav.Link href="/health" className='nav-links-navbar'>Health Tips</Nav.Link>
                                 <Nav.Link href="usage" className='nav-links-navbar'>Usage Reports</Nav.Link>
                                 <Nav.Link href="/profile" className='nav-links-navbar'>Profile</Nav.Link>
-                                <Nav.Link href="/settings" className='nav-links-navbar'>Settings ....</Nav.Link>
+                                <Nav.Link href="/settings" className='nav-links-navbar'>Settings</Nav.Link>
                                 <Nav.Link href="/help" className='nav-links-navbar'>Help</Nav.Link>
                                 <Nav.Link href="/contacts" className='nav-links-navbar'>Contact Us</Nav.Link>
                                 <Nav.Link href="/about" className='nav-links-navbar'>About</Nav.Link>
