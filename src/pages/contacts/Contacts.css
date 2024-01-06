@@ -2,8 +2,9 @@
     text-align: center;
 }
 
+/* Change bottom margin according to requirement */
 .contactsContainer {
-    margin-bottom: 70px;
+    margin-bottom: 240px;
     text-align: center;
 }
 
