@@ -73,6 +73,19 @@ const getHealthTips = (username) => {
     return axios.get(API_URL + "/tips", { params: { username }, headers: authHeader() });
 };
 
+const calculateCvsPercentage = (age, gender, averageHours, eyeDisease, contactLenses, monitorFilters, eyeSurgeries, averageDistance,
+    roomIllumination, screenBrightness, breaks, headache, burningEyeSensation, eyeRedness, blurredVision, dryEyes,
+    neckAndShoulderPain, eyeStrain, tiredEyes, soreEyes, irritation, poorFocusing, doubleVision) => {
+    return axios.post(API_URL + "/calculate-cvs",
+        {
+            age, gender, averageHours, eyeDisease, contactLenses, monitorFilters, eyeSurgeries, averageDistance,
+            roomIllumination, screenBrightness, breaks, headache, burningEyeSensation, eyeRedness, blurredVision, dryEyes,
+            neckAndShoulderPain, eyeStrain, tiredEyes, soreEyes, irritation, poorFocusing, doubleVision
+        },
+        { headers: authHeader() }
+    );
+};
+
 const postService = {
     getHelpText,
     getContacts,
@@ -88,7 +101,8 @@ const postService = {
     getMonthlyInteractionTimes,
     getPreviousWeeklyDistances,
     getPreviousWeeklyInteractionTimes,
-    getHealthTips
+    getHealthTips,
+    calculateCvsPercentage
 };
 
 export default postService;
