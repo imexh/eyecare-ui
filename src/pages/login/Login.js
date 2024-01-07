@@ -40,12 +40,12 @@ export default function Login() {
             <div className="loginPageSecondRow">
               <Form onSubmit={handleLogin}>
                 <Form.Group className="mb-3" controlId="formGroupUsername">
-                  <Form.Label>Username</Form.Label>
-                  <Form.Control type="text" placeholder="Enter username" onChange={(e) => setUsername(e.target.value)} />
+                  <Form.Label className="login-form-label">Username</Form.Label>
+                  <Form.Control className="login-form-control" type="text" placeholder="Enter username" onChange={(e) => setUsername(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formGroupPassword">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                  <Form.Label className="login-form-label">Password</Form.Label>
+                  <Form.Control className="login-form-control" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                 </Form.Group>
                 <div className="loginButtonDiv">
                   <Button className="loginButton" variant="primary" type="submit">Login</Button>
