@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import NavBarCommon from '../../../components/NavBarCommon'
 import FooterCommon from '../../../components/FooterCommon'
 import { Button, Container } from 'react-bootstrap'
@@ -6,6 +6,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import './CVSHome.css';
 import { useNavigate } from 'react-router-dom';
+import PostService from "../../../services/post.service";
+import AuthService from "../../../services/auth.service";
 
 export default function CVSHome() {
   const Navigate = useNavigate();
@@ -13,6 +15,19 @@ export default function CVSHome() {
   const handleNextButtonClick = () => {
     Navigate("/cvs-input");
   };
+
+  //Function to logout if not authenticated
+  useEffect(() => {
+    PostService.getContactDetails()
+      .catch((error) => {
+        console.log('Private page', error.response);
+        if (error.response && error.response.status === 403) {
+          AuthService.logout();
+          Navigate('/login');
+          window.location.reload();
+        }
+      });
+  }, [Navigate]);
 
   return (
     <div className='cvs-home-Background'>

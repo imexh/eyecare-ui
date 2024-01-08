@@ -8,12 +8,13 @@ import FooterCommon from '../../components/FooterCommon';
 import { useNavigate } from "react-router-dom";
 import PostService from "../../services/post.service";
 import AuthService from "../../services/auth.service";
-
+import { Placeholder } from 'react-bootstrap';
 
 export default function Contacts() {
-  const [email, setEmail] = useState(["...."]);
-  const [contact, setContact] = useState(["...."]);
-  const [website, setWebsite] = useState(["...."]);
+  const [email, setEmail] = useState(null);
+  const [contact, setContact] = useState(null);
+  const [website, setWebsite] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -25,12 +26,15 @@ export default function Contacts() {
         setWebsite(response.data.contactUs.websiteUrl);
       })
       .catch((error) => {
-        console.log("Private page", error.response);
+        console.log('Private page', error.response);
         if (error.response && error.response.status === 403) {
           AuthService.logout();
-          navigate("/login");
+          navigate('/login');
           window.location.reload();
         }
+      })
+      .finally(() => {
+        setLoading(false);
       });
   }, [navigate]);
 
@@ -47,19 +51,37 @@ export default function Contacts() {
         <Row className='secondRowContacts'>
           <Col>
             <span className='text-headings-contacts'>Email</span>
-            <p className='text-details-contacts'>{email}</p>
+            {loading ? (
+              <Placeholder as="p" animation="glow">
+                <Placeholder style={{ width: '25%' }} />
+              </Placeholder>
+            ) : (
+              <p className="text-details-contacts">{email}</p>
+            )}
           </Col>
         </Row>
         <Row className='thirdRowContacts'>
           <Col>
             <span className='text-headings-contacts'>Contact No</span>
-            <p className='text-details-contacts'>{contact}</p>
+            {loading ? (
+              <Placeholder as="p" animation="glow">
+                <Placeholder style={{ width: '25%' }} />
+              </Placeholder>
+            ) : (
+              <p className="text-details-contacts">{contact}</p>
+            )}
           </Col>
         </Row>
         <Row className='forthRowContacts'>
           <Col>
             <span className='text-headings-contacts'>Website</span>
-            <p className='text-details-contacts'>{website}</p>
+            {loading ? (
+              <Placeholder as="p" animation="glow">
+                <Placeholder style={{ width: '25%' }} />
+              </Placeholder>
+            ) : (
+              <p className="text-details-contacts">{website}</p>
+            )}
           </Col>
         </Row>
       </Container>

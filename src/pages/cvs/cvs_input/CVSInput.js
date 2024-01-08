@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import NavBarCommon from '../../../components/NavBarCommon'
 import FooterCommon from '../../../components/FooterCommon'
 import { Container } from 'react-bootstrap'
@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 import PostService from "../../../services/post.service";
 import Modal from 'react-bootstrap/Modal';
 import Spinner from 'react-bootstrap/Spinner';
+import AuthService from "../../../services/auth.service";
 
 export default function CVSInput() {
   const [age, setAge] = useState();
@@ -160,6 +161,19 @@ export default function CVSInput() {
   const handleDoubleVisionChange = (e) => {
     setDoubleVision(e.target.value);
   }
+
+  //Function to logout if not authenticated
+  useEffect(() => {
+    PostService.getContactDetails()
+      .catch((error) => {
+        console.log('Private page', error.response);
+        if (error.response && error.response.status === 403) {
+          AuthService.logout();
+          Navigate('/login');
+          window.location.reload();
+        }
+      });
+  }, [Navigate]);
 
   return (
     <div className='cvs-input-background'>
