@@ -9,6 +9,7 @@ import { Button } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import PostService from "../../../services/post.service";
 import Modal from 'react-bootstrap/Modal';
+import Spinner from 'react-bootstrap/Spinner';
 
 export default function CVSInput() {
   const [age, setAge] = useState();
@@ -38,6 +39,7 @@ export default function CVSInput() {
 
   const [cvsPercentage, setCVSPercentage] = useState(0.0);
 
+  const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -45,6 +47,7 @@ export default function CVSInput() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await PostService.calculateCvsPercentage(
         age, gender, averageHours, eyeDisease, contactLenses, monitorFilters, eyeSurgeries, averageDistance,
@@ -61,6 +64,8 @@ export default function CVSInput() {
         );
     } catch (err) {
       console.error(err);
+    } finally {
+      setLoading(false);
     }
   }
 
@@ -408,7 +413,18 @@ export default function CVSInput() {
               <Row>
                 <Col></Col>
                 <Col>
-                  <Button className="TestButton" variant="primary" type="submit">Start Test</Button>
+                  <Button className="TestButton" variant="primary" type="submit" disabled={loading}>
+                    {loading && (
+                      <Spinner
+                        as="span"
+                        animation="grow"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                    )}
+                    {loading ? ' Loading...' : 'Start Test'}
+                  </Button>
                 </Col>
                 <Col></Col>
               </Row>

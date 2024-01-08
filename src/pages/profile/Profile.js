@@ -11,6 +11,7 @@ import FooterCommon from '../../components/FooterCommon'
 import { useNavigate } from "react-router-dom";
 import PostService from "../../services/post.service";
 import AuthService from "../../services/auth.service";
+import Spinner from 'react-bootstrap/Spinner';
 
 export default function Profile() {
   const [name, setName] = useState([""]);
@@ -23,6 +24,8 @@ export default function Profile() {
   const [newemail, setNewEmail] = useState([""]);
   const [newcontact, setNewContact] = useState([""]);
   const [newbirthday, setNewBirthday] = useState([""]);
+
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -53,6 +56,7 @@ export default function Profile() {
 
   const handleChangeName = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const currentUser = AuthService.getCurrentUser().username;
       await PostService.addAccountDetails(currentUser, newname, birthday, contact, email)
@@ -66,20 +70,26 @@ export default function Profile() {
     } catch (err) {
       console.error("Error updating name:", err);
       alert("Failed to update name. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChangeUsername = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       alert("Under construction!");
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChangeContact = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const currentUser = AuthService.getCurrentUser().username;
       await PostService.addAccountDetails(currentUser, name, birthday, newcontact, email)
@@ -93,11 +103,14 @@ export default function Profile() {
     } catch (err) {
       console.error("Error updating contact:", err);
       alert("Failed to update contact. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChangeEmail = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const currentUser = AuthService.getCurrentUser().username;
       await PostService.addAccountDetails(currentUser, name, birthday, contact, newemail)
@@ -111,11 +124,14 @@ export default function Profile() {
     } catch (err) {
       console.error("Error updating email:", err);
       alert("Failed to update email. Please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
   const handleChangeBirthday = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       const currentUser = AuthService.getCurrentUser().username;
       await PostService.addAccountDetails(currentUser, name, newbirthday, contact, email)
@@ -134,10 +150,13 @@ export default function Profile() {
 
   const handleChangePassword = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       alert("Under construction!");
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -166,7 +185,18 @@ export default function Profile() {
                               <Form.Control id="inlineFormInputName" placeholder="New name" onChange={(e) => setNewName(e.target.value)} />
                             </Col>
                             <Col xs="auto" className="my-1">
-                              <Button type="submit" className='profile-button'>Change</Button>
+                              <Button className="profile-button" type="submit" disabled={loading}>
+                                {loading && (
+                                  <Spinner
+                                    as="span"
+                                    animation="grow"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                                {loading ? ' Loading...' : 'Change'}
+                              </Button>
                             </Col>
                           </Row>
                         </Form>
@@ -181,7 +211,18 @@ export default function Profile() {
                               <Form.Control id="inlineFormInputUsername" placeholder="New username" />
                             </Col>
                             <Col xs="auto" className="my-1">
-                              <Button type="submit" className='profile-button'>Change</Button>
+                              <Button className="profile-button" type="submit" disabled={loading}>
+                                {loading && (
+                                  <Spinner
+                                    as="span"
+                                    animation="grow"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                                {loading ? ' Loading...' : 'Change'}
+                              </Button>
                             </Col>
                           </Row>
                         </Form>
@@ -196,7 +237,18 @@ export default function Profile() {
                               <Form.Control id="inlineFormInputEmail" placeholder="New email" onChange={(e) => setNewEmail(e.target.value)} />
                             </Col>
                             <Col xs="auto" className="my-1">
-                              <Button type="submit" className='profile-button'>Change</Button>
+                              <Button className="profile-button" type="submit" disabled={loading}>
+                                {loading && (
+                                  <Spinner
+                                    as="span"
+                                    animation="grow"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                                {loading ? ' Loading...' : 'Change'}
+                              </Button>
                             </Col>
                           </Row>
                         </Form>
@@ -211,7 +263,18 @@ export default function Profile() {
                               <Form.Control id="inlineFormInputContact" placeholder="New contact number" onChange={(e) => setNewContact(e.target.value)} />
                             </Col>
                             <Col xs="auto" className="my-1">
-                              <Button type="submit" className='profile-button'>Change</Button>
+                              <Button className="profile-button" type="submit" disabled={loading}>
+                                {loading && (
+                                  <Spinner
+                                    as="span"
+                                    animation="grow"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                                {loading ? ' Loading...' : 'Change'}
+                              </Button>
                             </Col>
                           </Row>
                         </Form>
@@ -226,7 +289,18 @@ export default function Profile() {
                               <Form.Control id="inlineFormInputBirthday" placeholder="New birthday" onChange={(e) => setNewBirthday(e.target.value)} />
                             </Col>
                             <Col xs="auto" className="my-1">
-                              <Button type="submit" className='profile-button'>Change</Button>
+                              <Button className="profile-button" type="submit" disabled={loading}>
+                                {loading && (
+                                  <Spinner
+                                    as="span"
+                                    animation="grow"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                                {loading ? ' Loading...' : 'Change'}
+                              </Button>
                             </Col>
                           </Row>
                         </Form>
@@ -244,7 +318,18 @@ export default function Profile() {
                               <Form.Control id="inlineFormInputPassword" placeholder="New password" />
                             </Col>
                             <Col xs="auto" className="my-1">
-                              <Button type="submit" className='profile-button'>Change</Button>
+                              <Button className="profile-button" type="submit" disabled={loading}>
+                                {loading && (
+                                  <Spinner
+                                    as="span"
+                                    animation="grow"
+                                    size="sm"
+                                    role="status"
+                                    aria-hidden="true"
+                                  />
+                                )}
+                                {loading ? ' Loading...' : 'Change'}
+                              </Button>
                             </Col>
                           </Row>
                         </Form>

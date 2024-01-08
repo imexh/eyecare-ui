@@ -4,17 +4,20 @@ import Form from 'react-bootstrap/Form';
 import './Signup.css';
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../../services/auth.service";
+import Spinner from 'react-bootstrap/Spinner';
 
 export default function Signup() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const Navigate = useNavigate();
 
   const handleSignup = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await authService.createAccount(username, email, password, confirmPassword).then(
         () => {
@@ -27,6 +30,8 @@ export default function Signup() {
       );
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,7 +63,18 @@ export default function Signup() {
                   <Form.Control className="signup-form-control" type="password" placeholder="Confirm Password" onChange={(e) => setConfirmPassword(e.target.value)} />
                 </Form.Group>
                 <div className="loginButtonDiv">
-                  <Button className="loginButton" variant="primary" type="submit">Signup</Button>
+                  <Button className="loginButton" variant="primary" type="submit" disabled={loading}>
+                    {loading && (
+                      <Spinner
+                        as="span"
+                        animation="grow"
+                        size="sm"
+                        role="status"
+                        aria-hidden="true"
+                      />
+                    )}
+                    {loading ? ' Loading...' : 'Signup'}
+                  </Button>
                 </div>
               </Form>
             </div>
