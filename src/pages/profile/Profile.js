@@ -182,7 +182,7 @@ export default function Profile() {
                         <Form onSubmit={handleChangeName}>
                           <Row className="align-items-center">
                             <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputName" placeholder="New name" onChange={(e) => setNewName(e.target.value)} />
+                              <Form.Control id="inlineFormInputName" required placeholder="New name" onChange={(e) => setNewName(e.target.value)} />
                             </Col>
                             <Col xs="auto" className="my-1">
                               <Button className="profile-button" type="submit" disabled={loading}>
@@ -208,7 +208,7 @@ export default function Profile() {
                         <Form onSubmit={handleChangeUsername}>
                           <Row className="align-items-center">
                             <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputUsername" placeholder="New username" />
+                              <Form.Control id="inlineFormInputUsername" required placeholder="New username" />
                             </Col>
                             <Col xs="auto" className="my-1">
                               <Button className="profile-button" type="submit" disabled={loading}>
@@ -234,7 +234,7 @@ export default function Profile() {
                         <Form onSubmit={handleChangeEmail}>
                           <Row className="align-items-center">
                             <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputEmail" placeholder="New email" onChange={(e) => setNewEmail(e.target.value)} />
+                              <Form.Control id="inlineFormInputEmail" required placeholder="New email" onChange={(e) => setNewEmail(e.target.value)} />
                             </Col>
                             <Col xs="auto" className="my-1">
                               <Button className="profile-button" type="submit" disabled={loading}>
@@ -260,7 +260,7 @@ export default function Profile() {
                         <Form onSubmit={handleChangeContact}>
                           <Row className="align-items-center">
                             <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputContact" placeholder="New contact number" onChange={(e) => setNewContact(e.target.value)} />
+                              <Form.Control id="inlineFormInputContact" required placeholder="New contact number" onChange={(e) => setNewContact(e.target.value)} />
                             </Col>
                             <Col xs="auto" className="my-1">
                               <Button className="profile-button" type="submit" disabled={loading}>
@@ -286,7 +286,7 @@ export default function Profile() {
                         <Form onSubmit={handleChangeBirthday}>
                           <Row className="align-items-center">
                             <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputBirthday" placeholder="New birthday" onChange={(e) => setNewBirthday(e.target.value)} />
+                              <Form.Control id="inlineFormInputBirthday" required placeholder="New birthday" onChange={(e) => setNewBirthday(e.target.value)} />
                             </Col>
                             <Col xs="auto" className="my-1">
                               <Button className="profile-button" type="submit" disabled={loading}>
@@ -312,10 +312,10 @@ export default function Profile() {
                         <Form onSubmit={handleChangePassword}>
                           <Row className="align-items-center">
                             <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputPassword" placeholder="Current password" />
+                              <Form.Control id="inlineFormInputPassword" required placeholder="Current password" />
                             </Col>
                             <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputPassword" placeholder="New password" />
+                              <Form.Control id="inlineFormInputPassword" required placeholder="New password" />
                             </Col>
                             <Col xs="auto" className="my-1">
                               <Button className="profile-button" type="submit" disabled={loading}>

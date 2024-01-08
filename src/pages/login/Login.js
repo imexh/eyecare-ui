@@ -46,11 +46,11 @@ export default function Login() {
               <Form onSubmit={handleLogin}>
                 <Form.Group className="mb-3" controlId="formGroupUsername">
                   <Form.Label className="login-form-label">Username</Form.Label>
-                  <Form.Control className="login-form-control" type="text" placeholder="Enter username" onChange={(e) => setUsername(e.target.value)} />
+                  <Form.Control className="login-form-control" required type="text" placeholder="Enter username" onChange={(e) => setUsername(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formGroupPassword">
                   <Form.Label className="login-form-label">Password</Form.Label>
-                  <Form.Control className="login-form-control" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                  <Form.Control className="login-form-control" required type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                 </Form.Group>
                 <div className="loginButtonDiv">
                   <Button className="loginButton" variant="primary" type="submit" disabled={loading}>
