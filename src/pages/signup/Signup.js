@@ -49,19 +49,19 @@ export default function Signup() {
               <Form onSubmit={handleSignup}>
                 <Form.Group className="mb-3" controlId="formGroupUsername">
                   <Form.Label className="signup-form-label">Username</Form.Label>
-                  <Form.Control className="signup-form-control" required type="text" placeholder="Enter username" onChange={(e) => setUsername(e.target.value)} />
+                  <Form.Control className="signup-form-control" type="text" placeholder="Enter username" onChange={(e) => setUsername(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formGroupEmail">
                   <Form.Label className="signup-form-label">Email</Form.Label>
-                  <Form.Control className="signup-form-control" required type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
+                  <Form.Control className="signup-form-control" type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formGroupPassword">
                   <Form.Label className="signup-form-label">Password</Form.Label>
-                  <Form.Control className="signup-form-control" required type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
+                  <Form.Control className="signup-form-control" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
                 </Form.Group>
                 <Form.Group className="mb-3" controlId="formGroupConfirmPassword">
                   <Form.Label className="signup-form-label">Confirm Password</Form.Label>
-                  <Form.Control className="signup-form-control" required type="password" placeholder="Confirm Password" onChange={(e) => setConfirmPassword(e.target.value)} />
+                  <Form.Control className="signup-form-control" type="password" placeholder="Confirm Password" onChange={(e) => setConfirmPassword(e.target.value)} />
                 </Form.Group>
                 <div className="loginButtonDiv">
                   <Button className="loginButton" variant="primary" type="submit" disabled={loading}>
