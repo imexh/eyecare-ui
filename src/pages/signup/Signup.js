@@ -12,6 +12,7 @@ export default function Signup() {
   const [email, setEmail] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const Navigate = useNavigate();
 
@@ -25,7 +26,7 @@ export default function Signup() {
           window.location.reload();
         },
         (error) => {
-          alert(error.response.data.message)
+          setError(error.response.data.message);
         }
       );
     } catch (err) {
@@ -77,6 +78,8 @@ export default function Signup() {
                   </Button>
                 </div>
               </Form>
+              <br></br>
+              {error && <div className="error-message" style={{ color: 'red' }}>{error}</div>}
             </div>
             <div className="thirdRow">
               <p className="signupText">Already have an account?</p>

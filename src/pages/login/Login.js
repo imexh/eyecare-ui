@@ -10,6 +10,7 @@ export default function Login() {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const Navigate = useNavigate();
 
@@ -23,7 +24,7 @@ export default function Login() {
           window.location.reload();
         },
         (error) => {
-          alert(error.response.data.message)
+          setError(error.response.data.message);
         }
       );
     } catch (err) {
@@ -67,6 +68,8 @@ export default function Login() {
                   </Button>
                 </div>
               </Form>
+              <br></br>
+              {error && <div className="error-message" style={{ color: 'red' }}>{error}</div>}
             </div>
             <div className="loginPageThirdRow">
               <p className="signupText">Don't have an account?</p>
