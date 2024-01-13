@@ -224,7 +224,7 @@ export default function CVSInput() {
                 <Col>
                   <Form.Group className="mb-3" controlId="formGroupAverageDistance">
                     <Form.Label>Average distance from monitor (in cm)?</Form.Label>
-                    <Form.Control type="number" placeholder="Enter average distance" required onChange={(e) => setAverageDistance(e.target.value)} />
+                    <Form.Control type="number" step="any" placeholder="Enter average distance" required onChange={(e) => setAverageDistance(e.target.value)} />
                   </Form.Group>
                 </Col>
               </Row>
