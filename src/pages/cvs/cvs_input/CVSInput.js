@@ -14,29 +14,29 @@ import AuthService from "../../../services/auth.service";
 
 export default function CVSInput() {
   const [age, setAge] = useState();
-  const [gender, setGender] = useState("Male");
-  const [averageHours, setAverageHours] = useState("Below 2 hours");
-  const [eyeDisease, setEyeDisease] = useState("No");
-  const [contactLenses, setContactLenses] = useState("No");
-  const [monitorFilters, setMonitorFilters] = useState("No");
-  const [eyeSurgeries, setEyeSurgeries] = useState("No");
+  const [gender, setGender] = useState("1");
+  const [averageHours, setAverageHours] = useState("0");
+  const [eyeDisease, setEyeDisease] = useState("0");
+  const [contactLenses, setContactLenses] = useState("0");
+  const [monitorFilters, setMonitorFilters] = useState("0");
+  const [eyeSurgeries, setEyeSurgeries] = useState("0");
   const [averageDistance, setAverageDistance] = useState();
-  const [roomIllumination, setRoomIllumination] = useState("Dark");
-  const [screenBrightness, setScreenBrightness] = useState("Dark");
-  const [breaks, setBreaks] = useState("Every 15 minutes");
+  const [roomIllumination, setRoomIllumination] = useState("0");
+  const [screenBrightness, setScreenBrightness] = useState("0");
+  const [breaks, setBreaks] = useState("0");
 
-  const [headache, setHeadache] = useState("No Symptoms");
-  const [burningEyeSensation, setBurningEyeSensation] = useState("No Symptoms");
-  const [eyeRedness, setEyeRedness] = useState("No Symptoms");
-  const [blurredVision, setBlurredVision] = useState("No Symptoms");
-  const [dryEyes, setDryEyes] = useState("No Symptoms");
-  const [neckAndShoulderPain, setNeckAndShoulderPain] = useState("No Symptoms");
-  const [eyeStrain, setEyeStrain] = useState("No Symptoms");
-  const [tiredEyes, setTiredEyes] = useState("No Symptoms");
-  const [soreEyes, setSoreEyes] = useState("No Symptoms");
-  const [irritation, setIrritation] = useState("No Symptoms");
-  const [poorFocusing, setPoorFocusing] = useState("No Symptoms");
-  const [doubleVision, setDoubleVision] = useState("No Symptoms");
+  const [headache, setHeadache] = useState("0");
+  const [burningEyeSensation, setBurningEyeSensation] = useState("0");
+  const [eyeRedness, setEyeRedness] = useState("0");
+  const [blurredVision, setBlurredVision] = useState("0");
+  const [dryEyes, setDryEyes] = useState("0");
+  const [neckAndShoulderPain, setNeckAndShoulderPain] = useState("0");
+  const [eyeStrain, setEyeStrain] = useState("0");
+  const [tiredEyes, setTiredEyes] = useState("0");
+  const [soreEyes, setSoreEyes] = useState("0");
+  const [irritation, setIrritation] = useState("0");
+  const [poorFocusing, setPoorFocusing] = useState("0");
+  const [doubleVision, setDoubleVision] = useState("0");
 
   const [cvsPercentage, setCVSPercentage] = useState(0.0);
 
@@ -204,8 +204,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupGender">
                     <Form.Label>Gender</Form.Label>
                     <Form.Select onChange={handleGenderChange} value={gender}>
-                      <option value="Male">Male</option>
-                      <option value="Female">Female</option>
+                      <option value="1">Male</option>
+                      <option value="0">Female</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -215,9 +215,9 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupGender">
                     <Form.Label>Average number of hours you spend in front of a screen a day?</Form.Label>
                     <Form.Select onChange={handleAverageHoursChange} value={averageHours}>
-                      <option value="Below 2 hours">Below 2 hours</option>
-                      <option value="2 - 4 hours">2 - 4 hours</option>
-                      <option value="More than 4 hours">More than 4 hours</option>
+                      <option value="0">Below 2 hours</option>
+                      <option value="1">2 - 4 hours</option>
+                      <option value="2">More than 4 hours</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -233,8 +233,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupContactLenses">
                     <Form.Label>Do you use contact lenses?</Form.Label>
                     <Form.Select onChange={handleContactLensesChange} value={contactLenses}>
-                      <option value="No">No</option>
-                      <option value="Yes">Yes</option>
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -242,8 +242,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupEyeDisease">
                     <Form.Label>Do you have a history of eye disease and treatment?</Form.Label>
                     <Form.Select onChange={handleEyeDiseaseChange} value={eyeDisease}>
-                      <option value="No">No</option>
-                      <option value="Yes">Yes</option>
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -253,8 +253,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupEyeSurgeries">
                     <Form.Label>Have you done previous eye surgeries?</Form.Label>
                     <Form.Select onChange={handleEyeSurgeriesChange} value={eyeSurgeries}>
-                      <option value="No">No</option>
-                      <option value="Yes">Yes</option>
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -262,8 +262,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupMonitorFilters">
                     <Form.Label>Do you use monitor filters/blue light filters?</Form.Label>
                     <Form.Select onChange={handleMonitorFiltersChange} value={monitorFilters}>
-                      <option value="No">No</option>
-                      <option value="Yes">Yes</option>
+                      <option value="0">No</option>
+                      <option value="1">Yes</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -273,9 +273,9 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupRoomIllumination">
                     <Form.Label>Room illumination</Form.Label>
                     <Form.Select onChange={handleRoomIlluminationChange} value={roomIllumination} >
-                      <option value="Dark">Dark</option>
-                      <option value="Dull">Dull</option>
-                      <option value="Bright">Bright</option>
+                      <option value="0">Dark</option>
+                      <option value="1">Dull</option>
+                      <option value="2">Bright</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -283,10 +283,10 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupScreenBrightness">
                     <Form.Label>Screen brightness</Form.Label>
                     <Form.Select onChange={handleScreenBrightnessChange} value={screenBrightness} >
-                      <option value="Dark">Dark</option>
-                      <option value="Dull">Dull</option>
-                      <option value="Bright">Bright</option>
-                      <option value="Very Bright">Very Bright</option>
+                      <option value="0">Dark</option>
+                      <option value="1">Dull</option>
+                      <option value="2">Bright</option>
+                      <option value="3">Very Bright</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -296,9 +296,9 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupBreaks">
                     <Form.Label>How often do you take breaks during the use of an electronic device?</Form.Label>
                     <Form.Select onChange={handleBreaksChange} value={breaks}>
-                      <option value="Every 15 minutes">Every 15 minutes</option>
-                      <option value="Every 20 minutes">Every 20 minutes</option>
-                      <option value="After 20 minutes">After 20 minutes</option>
+                      <option value="0">Every 15 minutes</option>
+                      <option value="1">Every 20 minutes</option>
+                      <option value="2">After 20 minutes</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -313,8 +313,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupHeadache">
                     <Form.Label>Headache</Form.Label>
                     <Form.Select onChange={handleHeadacheChange} value={headache} >
-                      <option value="No Symptoms">No Symptoms</option>
-                      <option value="Have Symptoms">Have Symptoms</option>
+                      <option value="0">No Symptoms</option>
+                      <option value="1">Have Symptoms</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -322,8 +322,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupBurningEyeSensation">
                     <Form.Label>Burning eye sensation</Form.Label>
                     <Form.Select onChange={handleBurningEyeSensationChange} value={burningEyeSensation}>
-                      <option value="No Symptoms">No Symptoms</option>
-                      <option value="Have Symptoms">Have Symptoms</option>
+                      <option value="0">No Symptoms</option>
+                      <option value="1">Have Symptoms</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -331,8 +331,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupEyeRedness">
                     <Form.Label>Eye redness</Form.Label>
                     <Form.Select onChange={handleEyeRednessChange} value={eyeRedness}>
-                      <option value="No Symptoms">No Symptoms</option>
-                      <option value="Have Symptoms">Have Symptoms</option>
+                      <option value="0">No Symptoms</option>
+                      <option value="1">Have Symptoms</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -342,8 +342,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupBlurredVision">
                     <Form.Label>Blurred Vision</Form.Label>
                     <Form.Select onChange={handleBlurredVisionChange} value={blurredVision}>
-                      <option value="No Symptoms">No Symptoms</option>
-                      <option value="Have Symptoms">Have Symptoms</option>
+                      <option value="0">No Symptoms</option>
+                      <option value="1">Have Symptoms</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -351,8 +351,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupDryEyes">
                     <Form.Label>Dry Eyes</Form.Label>
                     <Form.Select onChange={handleDryEyesChange} value={dryEyes}>
-                      <option value="No Symptoms">No Symptoms</option>
-                      <option value="Have Symptoms">Have Symptoms</option>
+                      <option value="0">No Symptoms</option>
+                      <option value="1">Have Symptoms</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -360,8 +360,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupNeckAndShoulderPain">
                     <Form.Label>Neck And Shoulder Pain</Form.Label>
                     <Form.Select onChange={handleNeckAndShoulderPainChange} value={neckAndShoulderPain}>
-                      <option value="No Symptoms">No Symptoms</option>
-                      <option value="Have Symptoms">Have Symptoms</option>
+                      <option value="0">No Symptoms</option>
+                      <option value="1">Have Symptoms</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -371,8 +371,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupEyeStrain">
                     <Form.Label>Eye Strain</Form.Label>
                     <Form.Select onChange={handleEyeStrainChange} value={eyeStrain}>
-                      <option value="No Symptoms">No Symptoms</option>
-                      <option value="Have Symptoms">Have Symptoms</option>
+                      <option value="0">No Symptoms</option>
+                      <option value="1">Have Symptoms</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -380,8 +380,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupTiredEyes">
                     <Form.Label>Tired Eyes</Form.Label>
                     <Form.Select onChange={handleTiredEyesChange} value={tiredEyes}>
-                      <option value="No Symptoms">No Symptoms</option>
-                      <option value="Have Symptoms">Have Symptoms</option>
+                      <option value="0">No Symptoms</option>
+                      <option value="1">Have Symptoms</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -389,8 +389,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupSoreEyes">
                     <Form.Label>Sore Eyes</Form.Label>
                     <Form.Select onChange={handleSoreEyesChange} value={soreEyes}>
-                      <option value="No Symptoms">No Symptoms</option>
-                      <option value="Have Symptoms">Have Symptoms</option>
+                      <option value="0">No Symptoms</option>
+                      <option value="1">Have Symptoms</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -400,8 +400,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupIrritation">
                     <Form.Label>Irritation</Form.Label>
                     <Form.Select onChange={handleIrritationChange} value={irritation}>
-                      <option value="No Symptoms">No Symptoms</option>
-                      <option value="Have Symptoms">Have Symptoms</option>
+                      <option value="0">No Symptoms</option>
+                      <option value="1">Have Symptoms</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -409,8 +409,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupPoorFocusing">
                     <Form.Label>Poor Focusing</Form.Label>
                     <Form.Select onChange={handlePoorFocusingChange} value={poorFocusing}>
-                      <option value="No Symptoms">No Symptoms</option>
-                      <option value="Have Symptoms">Have Symptoms</option>
+                      <option value="0">No Symptoms</option>
+                      <option value="1">Have Symptoms</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
@@ -418,8 +418,8 @@ export default function CVSInput() {
                   <Form.Group className="mb-3" controlId="formGroupDoubleVision">
                     <Form.Label>Double Vision</Form.Label>
                     <Form.Select onChange={handleDoubleVisionChange} value={doubleVision}>
-                      <option value="No Symptoms">No Symptoms</option>
-                      <option value="Have Symptoms">Have Symptoms</option>
+                      <option value="0">No Symptoms</option>
+                      <option value="1">Have Symptoms</option>
                     </Form.Select>
                   </Form.Group>
                 </Col>
