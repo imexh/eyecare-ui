@@ -1,17 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import NavBarCommon from '../../components/NavBarCommon'
-import Accordion from 'react-bootstrap/Accordion';
-import Container from 'react-bootstrap/Container';
-import './Profile.css';
-import Button from 'react-bootstrap/Button';
-import Col from 'react-bootstrap/Col';
-import Form from 'react-bootstrap/Form';
-import Row from 'react-bootstrap/Row';
 import FooterCommon from '../../components/FooterCommon'
 import { useNavigate } from "react-router-dom";
 import PostService from "../../services/post.service";
 import AuthService from "../../services/auth.service";
-import Spinner from 'react-bootstrap/Spinner';
 
 export default function Profile() {
   const [name, setName] = useState([""]);
@@ -27,7 +19,49 @@ export default function Profile() {
 
   const [loading, setLoading] = useState(false);
 
+  const [isNameEditing, setIsNameEditing] = useState(false);
+  const [isEmailEditing, setIsEmailEditing] = useState(false);
+  const [isContactEditing, setIsContactEditing] = useState(false);
+  const [isBirthdayEditing, setIsBirthdayEditing] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+
   const navigate = useNavigate();
+
+  const handleNameEditClick = () => {
+    setNewName(name);
+    setIsNameEditing(true);
+  };
+
+  const handleNameCancelClick = () => {
+    setIsNameEditing(false);
+  };
+
+  const handleEmailEditClick = () => {
+    setNewEmail(email);
+    setIsEmailEditing(true);
+  };
+
+  const handleEmailCancelClick = () => {
+    setIsEmailEditing(false);
+  };
+
+  const handleContactEditClick = () => {
+    setNewContact(contact);
+    setIsContactEditing(true);
+  };
+
+  const handleContactCancelClick = () => {
+    setIsContactEditing(false);
+  };
+
+  const handleBirthdayEditClick = () => {
+    setNewBirthday(birthday);
+    setIsBirthdayEditing(true);
+  };
+
+  const handleBirthdayCancelClick = () => {
+    setIsBirthdayEditing(false);
+  };
 
   useEffect(() => {
     if (AuthService.getCurrentUser() == null) {
@@ -72,6 +106,7 @@ export default function Profile() {
       alert("Failed to update name. Please try again.");
     } finally {
       setLoading(false);
+      setIsNameEditing(false);
     }
   };
 
@@ -161,189 +196,261 @@ export default function Profile() {
   };
 
   return (
-    <div className='profile-background'>
+    <>
       <NavBarCommon />
-      <h1>Profile</h1>
-      <Container className='profileContainer profileRow mx-auto card'>
-        <Row className='first-row-profile profile-title-fonts'>
-          <Col>
-            <p>Hello, {name}!</p>
-          </Col>
-        </Row>
-        <Row className='inner-row-profile'>
-          <Container className='profileContainer mx-auto card profile-inner-container'>
-            <Row className='second-row-profile profile-body-fonts'>
-              <Col>
-                <Container>
-                  <Accordion className='profileAccordion'>
-                    <Accordion.Item eventKey="0">
-                      <Accordion.Header><span className='profile-body-fonts'><b>Name: </b>{name}</span></Accordion.Header>
-                      <Accordion.Body>
-                        <Form onSubmit={handleChangeName}>
-                          <Row className="align-items-center">
-                            <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputName" required placeholder="New name" onChange={(e) => setNewName(e.target.value)} />
-                            </Col>
-                            <Col xs="auto" className="my-1">
-                              <Button className="profile-button" type="submit" disabled={loading}>
-                                {loading && (
-                                  <Spinner
-                                    as="span"
-                                    animation="grow"
-                                    size="sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                                {loading ? ' Loading...' : 'Change'}
-                              </Button>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="1">
-                      <Accordion.Header><span className='profile-body-fonts'><b>Username: </b>{username}</span></Accordion.Header>
-                      <Accordion.Body>
-                        <Form onSubmit={handleChangeUsername}>
-                          <Row className="align-items-center">
-                            <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputUsername" required placeholder="New username" />
-                            </Col>
-                            <Col xs="auto" className="my-1">
-                              <Button className="profile-button" type="submit" disabled={loading}>
-                                {loading && (
-                                  <Spinner
-                                    as="span"
-                                    animation="grow"
-                                    size="sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                                {loading ? ' Loading...' : 'Change'}
-                              </Button>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="2">
-                      <Accordion.Header><span className='profile-body-fonts'><b>Email:</b> {email}</span></Accordion.Header>
-                      <Accordion.Body>
-                        <Form onSubmit={handleChangeEmail}>
-                          <Row className="align-items-center">
-                            <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputEmail" required placeholder="New email" onChange={(e) => setNewEmail(e.target.value)} />
-                            </Col>
-                            <Col xs="auto" className="my-1">
-                              <Button className="profile-button" type="submit" disabled={loading}>
-                                {loading && (
-                                  <Spinner
-                                    as="span"
-                                    animation="grow"
-                                    size="sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                                {loading ? ' Loading...' : 'Change'}
-                              </Button>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="3">
-                      <Accordion.Header><span className='profile-body-fonts'><b>Contact No: </b>{contact}</span></Accordion.Header>
-                      <Accordion.Body>
-                        <Form onSubmit={handleChangeContact}>
-                          <Row className="align-items-center">
-                            <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputContact" required placeholder="New contact number" onChange={(e) => setNewContact(e.target.value)} />
-                            </Col>
-                            <Col xs="auto" className="my-1">
-                              <Button className="profile-button" type="submit" disabled={loading}>
-                                {loading && (
-                                  <Spinner
-                                    as="span"
-                                    animation="grow"
-                                    size="sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                                {loading ? ' Loading...' : 'Change'}
-                              </Button>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="4">
-                      <Accordion.Header><span className='profile-body-fonts'><b>Birthday: </b>{birthday}</span></Accordion.Header>
-                      <Accordion.Body>
-                        <Form onSubmit={handleChangeBirthday}>
-                          <Row className="align-items-center">
-                            <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputBirthday" required placeholder="New birthday" onChange={(e) => setNewBirthday(e.target.value)} />
-                            </Col>
-                            <Col xs="auto" className="my-1">
-                              <Button className="profile-button" type="submit" disabled={loading}>
-                                {loading && (
-                                  <Spinner
-                                    as="span"
-                                    animation="grow"
-                                    size="sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                                {loading ? ' Loading...' : 'Change'}
-                              </Button>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                    <Accordion.Item eventKey="5">
-                      <Accordion.Header><span className='profile-body-fonts'><b>Password</b></span></Accordion.Header>
-                      <Accordion.Body>
-                        <Form onSubmit={handleChangePassword}>
-                          <Row className="align-items-center">
-                            <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputPassword" required placeholder="Current password" />
-                            </Col>
-                            <Col sm={3} className="my-1">
-                              <Form.Control id="inlineFormInputPassword" required placeholder="New password" />
-                            </Col>
-                            <Col xs="auto" className="my-1">
-                              <Button className="profile-button" type="submit" disabled={loading}>
-                                {loading && (
-                                  <Spinner
-                                    as="span"
-                                    animation="grow"
-                                    size="sm"
-                                    role="status"
-                                    aria-hidden="true"
-                                  />
-                                )}
-                                {loading ? ' Loading...' : 'Change'}
-                              </Button>
-                            </Col>
-                          </Row>
-                        </Form>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </Accordion>
-                </Container>
-              </Col>
-            </Row>
-          </Container>
-        </Row>
-      </Container>
-      <div className='final-div-profile'></div>
+
+      <div className='mx-auto mx-auto px-24 mt-8 mb-8' style={{ minHeight: '75vh' }}>
+        <div className="px-4 sm:px-0">
+          <h3 className="font-semibold leading-7 text-gray-900 text-3xl">Profile</h3>
+          <p className="mt-1 max-w-2xl text-xl leading-6 text-gray-500">Personal Information.</p>
+        </div>
+        <div className="mt-6 border-t border-gray-100">
+          <dl className="divide-y divide-gray-100">
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-lg font-medium leading-6 text-gray-900">Full Name</dt>
+              <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                {isNameEditing ? (
+                  <div className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <input
+                          type="text"
+                          value={newname}
+                          onChange={(e) => setNewName(e.target.value)}
+                          className="truncate leading-6 text-gray-700 focus:outline-none "
+                        />
+                      </div>
+                    </div>
+                    <div classname="ml-4 flex-shrink-0">
+                      <button onClick={handleNameCancelClick} className="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        Cancel
+                      </button>
+                      <button onClick={handleChangeName} className="ml-2 text-indigo-600 hover:text-indigo-500 focus:outline-none">
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <li className="flex items-center justify-between pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <span className="truncate leading-6 text-gray-700 text-lg">{name}</span>
+                      </div>
+                    </div>
+                    <div className="ml-4 flex-shrink-0">
+                      <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500" onClick={handleNameEditClick}>
+                        Change
+                      </a>
+                    </div>
+                  </li>
+                )}
+              </dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="font-medium leading-6 text-gray-900 text-lg">Username</dt>
+              <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                {isEditing ? (
+                  <div className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <input
+                          type="text"
+                          value={newbirthday}
+                          onChange={(e) => setNewBirthday(e.target.value)}
+                          className="truncate leading-6 text-gray-700 focus:outline-none "
+                        />
+                      </div>
+                    </div>
+                    <div classname="ml-4 flex-shrink-0">
+                      <button onClick={handleBirthdayCancelClick} className="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        Cancel
+                      </button>
+                      <button onClick={handleChangeBirthday} className="ml-2 text-indigo-600 hover:text-indigo-500 focus:outline-none">
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <li className="flex items-center justify-between pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <span className="truncate leading-6 text-gray-700 text-lg">{username}</span>
+                      </div>
+                    </div>
+                    <div className="ml-4 flex-shrink-0">
+                      <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+
+                      </a>
+                    </div>
+                  </li>
+                )}
+              </dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="font-medium leading-6 text-gray-900 text-lg">Email address</dt>
+              <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                {isEmailEditing ? (
+                  <div className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <input
+                          type="text"
+                          value={newemail}
+                          onChange={(e) => setNewEmail(e.target.value)}
+                          className="truncate leading-6 text-gray-700 focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                    <div classname="ml-4 flex-shrink-0">
+                      <button onClick={handleEmailCancelClick} className="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        Cancel
+                      </button>
+                      <button onClick={handleChangeEmail} className="ml-2 text-indigo-600 hover:text-indigo-500 focus:outline-none">
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <li className="flex items-center justify-between pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <span className="truncate leading-6 text-gray-700 text-lg">{email}</span>
+                      </div>
+                    </div>
+                    <div className="ml-4 flex-shrink-0">
+                      <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500" onClick={handleEmailEditClick}>
+                        Change
+                      </a>
+                    </div>
+                  </li>
+                )}
+              </dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-lg font-medium leading-6 text-gray-900">Contact number</dt>
+              <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                {isContactEditing ? (
+                  <div className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <input
+                          type="text"
+                          value={newcontact}
+                          onChange={(e) => setNewContact(e.target.value)}
+                          className="truncate leading-6 text-gray-700 focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                    <div classname="ml-4 flex-shrink-0">
+                      <button onClick={handleContactCancelClick} className="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        Cancel
+                      </button>
+                      <button onClick={handleChangeContact} className="ml-2 text-indigo-600 hover:text-indigo-500 focus:outline-none">
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <li className="flex items-center justify-between pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <span className="truncate leading-6 text-gray-700 text-lg">{contact}</span>
+                      </div>
+                    </div>
+                    <div className="ml-4 flex-shrink-0">
+                      <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500" onClick={handleContactEditClick}>
+                        Change
+                      </a>
+                    </div>
+                  </li>
+                )}
+              </dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-lg font-medium leading-6 text-gray-900">Birthday</dt>
+              <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                {isBirthdayEditing ? (
+                  <div className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <input
+                          type="text"
+                          value={newbirthday}
+                          onChange={(e) => setNewBirthday(e.target.value)}
+                          className="truncate leading-6 text-gray-700 focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                    <div classname="ml-4 flex-shrink-0">
+                      <button onClick={handleBirthdayCancelClick} className="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        Cancel
+                      </button>
+                      <button onClick={handleChangeBirthday} className="ml-2 text-indigo-600 hover:text-indigo-500 focus:outline-none">
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <li className="flex items-center justify-between pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <span className="truncate leading-6 text-gray-700 text-lg">{birthday}</span>
+                      </div>
+                    </div>
+                    <div className="ml-4 flex-shrink-0">
+                      <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500" onClick={handleBirthdayEditClick}>
+                        Change
+                      </a>
+                    </div>
+                  </li>
+                )}
+              </dd>
+            </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-lg font-medium leading-6 text-gray-900">Password</dt>
+              <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                {isEditing ? (
+                  <div className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <input
+                          type="text"
+                          value={newbirthday}
+                          onChange={(e) => setNewBirthday(e.target.value)}
+                          className="truncate leading-6 text-gray-700 focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                    <div classname="ml-4 flex-shrink-0">
+                      <button onClick={handleBirthdayCancelClick} className="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        Cancel
+                      </button>
+                      <button onClick={handleChangeBirthday} className="ml-2 text-indigo-600 hover:text-indigo-500 focus:outline-none">
+                        Save
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <li className="flex items-center justify-between pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <span className="truncate leading-6 text-gray-700 text-lg">*************</span>
+                      </div>
+                    </div>
+                    <div className="ml-4 flex-shrink-0">
+                      <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
+
+                      </a>
+                    </div>
+                  </li>
+                )}
+              </dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+
       <FooterCommon />
-    </div>
+    </>
   )
 }

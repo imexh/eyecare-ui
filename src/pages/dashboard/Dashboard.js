@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from 'react'
 import NavBarCommon from '../../components/NavBarCommon'
-import "./Dashboard.css";
-import { Button, Container, Row, Col } from 'react-bootstrap';
 import FooterCommon from '../../components/FooterCommon';
 import { useNavigate } from "react-router-dom";
 import AuthService from "../../services/auth.service";
@@ -213,86 +211,63 @@ export default function Dashboard() {
   };
 
   return (
-    <div>
+    <>
       <NavBarCommon />
-      <Container className='dashboard-container'>
-        <h1>Dashboard</h1>
-        <Row className='mb-3'>
-          <Col xs={12}>
-            <div className="p-2 card">
-              <Row className='font-dashboard-text'>
-                <Col>
-                  <div className='p-2'><b>Date:</b> <i>{date}</i></div>
-                </Col>
-                <Col>
-                  <div className='p-2'><b>Time Elapsed:</b> <i>{formatTime(elapsedTime)}</i></div>
-                </Col>
-                <Col>
-                  <div className='p-2'><b>User:</b> <i>{username}</i></div>
-                </Col>
-              </Row>
-            </div>
-          </Col>
-        </Row>
 
-        <Row className='mb-3 custom-row-dashboard font-dashboard-text'>
-          <Col>
-            <div className="p-2 card custom-row-dashboard">
-              <div className='p-2'><b>Current Distance to the screen:</b> {distance.toFixed(2)} cm</div>
-            </div>
-          </Col>
-          <Col>
-            <div className="p-2 card custom-row-dashboard">
-              <div className='p-2'><b>Interaction Time:</b> {formatTime(interactionTime)}</div>
-            </div>
-          </Col>
-          <Col>
-            <div className="p-2 card custom-row-dashboard d-flex justify-content-center">
-              <Button onClick={toggleCamera}>
-                {isCameraActive ? "Stop Camera" : "Start Camera"}
-              </Button>
-            </div>
-          </Col>
-        </Row>
+      <div className="min-h-full mb-12">
+        <header className="bg-white shadow pb-2">
+          <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+            <h1 className="text-3xl font-bold tracking-tight text-gray-900 mb-4">Dashboard</h1>
+          </div>
+        </header>
+        <main className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 mx-auto px-16 mt-12 px-24">
+          <div className="sm:col-span-2 py-6 px-8 bg-gray-200 bg-opacity-30 rounded-md">
+            <span className='text-lg'><b>Date:</b> <i>{date}</i></span>
+          </div>
+          <div className="sm:col-span-2 py-6 px-8 bg-gray-200 bg-opacity-30 rounded-md">
+            <span className='text-lg'><b>Time Elapsed:</b> <i>{formatTime(elapsedTime)}</i></span>
+          </div>
+          <div className="sm:col-span-2 py-6 px-8 bg-gray-200 bg-opacity-30 rounded-md">
+            <span className='text-lg'><b>User:</b> <i>{username}</i></span>
+          </div>
+          <div className="sm:col-span-2 max-w-7xl py-6 px-8 bg-gray-200 bg-opacity-30 rounded-md">
+            <span className='text-lg'><b>Current Distance to the screen:</b> {distance.toFixed(2)} cm</span>
+          </div>
+          <div className="sm:col-span-2 max-w-7xl py-6 px-8 bg-gray-200 bg-opacity-30 rounded-md">
+            <span className='text-lg'><b>Interaction Time:</b> {formatTime(interactionTime)}</span>
+          </div>
+          <div className="sm:col-span-2 max-w-7xl py-6 px-8 bg-gray-200 bg-opacity-30 rounded-md">
+            <button
+              onClick={toggleCamera}
+              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-lg font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+              {isCameraActive ? "Stop Camera" : "Start Camera"}
+            </button>
+          </div>
+          <div className="sm:col-span-2 max-w-7xl py-6 px-8 bg-gray-200 bg-opacity-30 rounded-md h-60 flex items-center justify-center flex-col">
+            <p className='text-lg'>Eyes Interacting?</p>
+            <p className='text-3xl'><b>{eyeInteraction}</b></p>
+          </div>
+          <div className="sm:col-span-2 max-w-7xl py-6 px-8 bg-red-600 rounded-md h-60 flex items-center justify-center flex-col">
+            <p className='text-lg'>Status</p>
+            <p className='text-3xl'><b>Critical</b></p>
+          </div>
+          <div className="sm:col-span-2 max-w-7xl py-6 lg:px-8 bg-gray-400 rounded-md flex items-center justify-center h-60">
+            {isCameraActive ? (
+              <CameraComponent onDistanceChange={handleDistanceChange} />
+            ) : (
+              <img src={'images/cameracard.png'} alt="Camera" className="max-w-full max-h-full" />
+            )}
+          </div>
+          <div className="sm:col-span-3 max-w-7xl py-6 lg:px-8 bg-gray-200 bg-opacity-30 rounded-md">
+            <BarChart title={"Weekly Distance Report (Average)"} chartLabels={labels} yLabel={"Average Distance (cm)"} chartData={distanceData} />
+          </div>
+          <div className="sm:col-span-3 max-w-7xl py-6 lg:px-8 bg-gray-200 bg-opacity-30 rounded-md">
+            <BarChart title={"Weekly Interaction Time Report"} chartLabels={labels} yLabel={"Interaction Time (sec)"} chartData={interactionData} />
+          </div>
+        </main>
+      </div>
 
-        <Row className='mb-3 font-dashboard-text'>
-          <Col>
-            <div className="p-2 card custom-row-camera-dashboard text-center d-flex align-items-center justify-content-center">
-              <p className='font-dashboard-text-answers-topic'>Eyes Interacting?</p>
-              <p className='font-dashboard-text-answers'>{eyeInteraction}</p>
-            </div>
-          </Col>
-          <Col>
-            <div className="p-2 card custom-row-camera-dashboard text-center d-flex align-items-center justify-content-center dashboard-red-card">
-              <p className='font-dashboard-text-answers-topic'>Status</p>
-              <p className='font-dashboard-text-answers'>Critical</p>
-            </div>
-          </Col>
-          <Col>
-            <div className="p-2 card d-flex align-items-center justify-content-center custom-row-camera-dashboard dashboard-grey-card">
-              {isCameraActive ? (
-                <CameraComponent onDistanceChange={handleDistanceChange} />
-              ) : (
-                <img src={'images/cameracard.png'} alt="Camera" />
-              )}
-            </div>
-          </Col>
-        </Row>
-
-        <Row className='mb-5' >
-          <Col>
-            <div className="p-2 card">
-              <BarChart title={"Weekly Distance Report (Average)"} chartLabels={labels} yLabel={"Average Distance (cm)"} chartData={distanceData} />
-            </div>
-          </Col>
-          <Col>
-            <div className="p-2 card">
-              <BarChart title={"Weekly Interaction Time Report"} chartLabels={labels} yLabel={"Interaction Time (sec)"} chartData={interactionData} />
-            </div>
-          </Col>
-        </Row>
-      </Container>
       <FooterCommon />
-    </div>
+    </>
   )
 }

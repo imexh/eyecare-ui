@@ -1,20 +1,14 @@
 import React, { useState, useEffect } from 'react'
 import NavBarCommon from '../../components/NavBarCommon'
-import Container from 'react-bootstrap/Container';
-import Row from 'react-bootstrap/Row';
-import Col from 'react-bootstrap/Col';
-import './Contacts.css';
 import FooterCommon from '../../components/FooterCommon';
 import { useNavigate } from "react-router-dom";
 import PostService from "../../services/post.service";
 import AuthService from "../../services/auth.service";
-import { Placeholder } from 'react-bootstrap';
 
 export default function Contacts() {
   const [email, setEmail] = useState(null);
   const [contact, setContact] = useState(null);
   const [website, setWebsite] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -33,59 +27,48 @@ export default function Contacts() {
           window.location.reload();
         }
       })
-      .finally(() => {
-        setLoading(false);
-      });
   }, [navigate]);
 
   return (
-    <div className='contacts-background'>
+    <>
       <NavBarCommon />
-      <h1>Contact Us</h1>
-      <Container className='contactsContainer contactsRow mx-auto card contacts-fonts'>
-        <Row className='firstRowContacts'>
-          <Col>
-            <h3>Reach us out</h3>
-          </Col>
-        </Row>
-        <Row className='secondRowContacts'>
-          <Col>
-            <span className='text-headings-contacts'>Email</span>
-            {loading ? (
-              <Placeholder as="p" animation="glow">
-                <Placeholder style={{ width: '25%' }} />
-              </Placeholder>
-            ) : (
-              <p className="text-details-contacts">{email}</p>
-            )}
-          </Col>
-        </Row>
-        <Row className='thirdRowContacts'>
-          <Col>
-            <span className='text-headings-contacts'>Contact No</span>
-            {loading ? (
-              <Placeholder as="p" animation="glow">
-                <Placeholder style={{ width: '25%' }} />
-              </Placeholder>
-            ) : (
-              <p className="text-details-contacts">{contact}</p>
-            )}
-          </Col>
-        </Row>
-        <Row className='forthRowContacts'>
-          <Col>
-            <span className='text-headings-contacts'>Website</span>
-            {loading ? (
-              <Placeholder as="p" animation="glow">
-                <Placeholder style={{ width: '25%' }} />
-              </Placeholder>
-            ) : (
-              <p className="text-details-contacts">{website}</p>
-            )}
-          </Col>
-        </Row>
-      </Container>
+      <div className="bg-white py-24 sm:py-32" style={{ minHeight: '80vh' }}>
+        <div className="mx-auto grid max-w-7xl gap-x-8 gap-y-20 px-6 lg:px-8 xl:grid-cols-3">
+          <div className="max-w-3xl text-justify">
+            <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">Get in touch</h2>
+            <p className="mt-6 text-lg leading-8 text-gray-600">
+              We try to respond to you as soon as possible.
+            </p>
+          </div>
+          <div className="grid gap-x-8 gap-y-8 sm:grid-cols-2 sm:gap-y-8 xl:col-span-2">
+            <div className="group relative">
+              <div className="w-full overflow-hidden rounded-md group-hover:opacity-75">
+                <div className="pl-12 pt-12 pb-8 bg-gray-200 p-4 w-full md:w-auto bg-opacity-30">
+                  <h3 className="text-lg font-semibold">Email</h3>
+                  <p className='text-indigo-600'>{email}</p>
+                </div>
+              </div>
+            </div>
+            <div className="group relative">
+              <div className="w-full overflow-hidden rounded-md group-hover:opacity-75">
+                <div className="pl-12 pt-12 pb-8 bg-gray-200 p-4 w-full md:w-auto bg-opacity-30">
+                  <h3 className="text-lg font-semibold">Contact Number</h3>
+                  <p className='text-indigo-600'>{contact}</p>
+                </div>
+              </div>
+            </div>
+            <div className="group relative">
+              <div className="w-full overflow-hidden rounded-md group-hover:opacity-75">
+                <div className="pl-12 pt-12 pb-8 bg-gray-200 p-4 w-full md:w-auto bg-opacity-30">
+                  <h3 className="text-lg font-semibold">Website</h3>
+                  <p className='text-indigo-600'>{website}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
       <FooterCommon />
-    </div>
+    </>
   )
 }
