@@ -1,10 +1,7 @@
 import React, { useState } from "react";
-import { Button } from "react-bootstrap";
-import Form from 'react-bootstrap/Form';
-import './Signup.css';
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import authService from "../../services/auth.service";
-import Spinner from 'react-bootstrap/Spinner';
+import NavbarHome from '../../components/NavbarHome';
 
 export default function Signup() {
   const [username, setUsername] = useState("");
@@ -37,58 +34,122 @@ export default function Signup() {
   };
 
   return (
-    <div>
-      <div className="container-fluid">
-        <div className="row">
-          <div className="col-md-4 leftDiv">
-            <div className="firstRow">
-              <p className="title">Signup</p>
-              <p className="subtitle">Create a new account</p>
+    <>
+      <NavbarHome />
+      <div className="flex min-h-full flex-1 flex-col justify-center px-6 pb-32 pt-32 py-12 lg:px-8">
+        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+          <img
+            className="mx-auto h-20 w-auto"
+            src="/images/eyecaresquarelogoblack.png"
+            alt="Your Company"
+          />
+          <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+            Create an account
+          </h2>
+        </div>
+
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form className="space-y-6" onSubmit={handleSignup}>
+            <div>
+              <label htmlFor="username" className="block text-sm font-medium leading-6 text-gray-900">
+                Username
+              </label>
+              <div className="mt-2">
+                <input
+                  id="username"
+                  name="username"
+                  type="text"
+                  autoComplete="username"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+              </div>
             </div>
-            <div className="secondRow">
-              <Form onSubmit={handleSignup}>
-                <Form.Group className="mb-3" controlId="formGroupUsername">
-                  <Form.Label className="signup-form-label">Username</Form.Label>
-                  <Form.Control className="signup-form-control" type="text" placeholder="Enter username" onChange={(e) => setUsername(e.target.value)} />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formGroupEmail">
-                  <Form.Label className="signup-form-label">Email</Form.Label>
-                  <Form.Control className="signup-form-control" type="email" placeholder="Enter email" onChange={(e) => setEmail(e.target.value)} />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formGroupPassword">
-                  <Form.Label className="signup-form-label">Password</Form.Label>
-                  <Form.Control className="signup-form-control" type="password" placeholder="Password" onChange={(e) => setPassword(e.target.value)} />
-                </Form.Group>
-                <Form.Group className="mb-3" controlId="formGroupConfirmPassword">
-                  <Form.Label className="signup-form-label">Confirm Password</Form.Label>
-                  <Form.Control className="signup-form-control" type="password" placeholder="Confirm Password" onChange={(e) => setConfirmPassword(e.target.value)} />
-                </Form.Group>
-                <div className="loginButtonDiv">
-                  <Button className="loginButton" variant="primary" type="submit" disabled={loading}>
-                    {loading && (
-                      <Spinner
-                        as="span"
-                        animation="grow"
-                        size="sm"
-                        role="status"
-                        aria-hidden="true"
-                      />
-                    )}
-                    {loading ? ' Loading...' : 'Signup'}
-                  </Button>
-                </div>
-              </Form>
-              <br></br>
-              {error && <div className="error-message" style={{ color: 'red' }}>{error}</div>}
+
+            <div>
+              <label htmlFor="email" className="block text-sm font-medium leading-6 text-gray-900">
+                Email
+              </label>
+              <div className="mt-2">
+                <input
+                  id="email"
+                  name="email"
+                  type="email"
+                  autoComplete="email"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+              </div>
             </div>
-            <div className="thirdRow">
-              <p className="signupText">Already have an account?</p>
-              <Link to="/login" className="signupLink">Login</Link>
+
+            <div>
+              <div className="flex items-center justify-between">
+                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                  Password
+                </label>
+              </div>
+              <div className="mt-2">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+              </div>
             </div>
-          </div>
-          <div className="col-md-8 rightDiv" style={{ backgroundImage: 'url("images/signupbackground.jpeg")', backgroundSize: 'cover', minHeight: '100vh' }}></div>
+
+            <div>
+              <div className="flex items-center justify-between">
+                <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">
+                  Confirm Password
+                </label>
+              </div>
+              <div className="mt-2">
+                <input
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                  onChange={(e) => setConfirmPassword(e.target.value)}
+                />
+              </div>
+            </div>
+
+            <div>
+              <button
+                type="submit"
+                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                {loading && (
+                  <span
+                    as="span"
+                    animation="grow"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                )}
+                {loading ? ' Loading...' : 'Create Account'}
+              </button>
+            </div>
+          </form>
+          {error && <br></br>}
+          {error && <div className="error-message" style={{ color: 'red' }}>{error}</div>}
+          <p className="mt-10 text-center text-sm text-gray-500">
+            Already have an account?{' '}
+            <a href="/login" className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500">
+              Log in
+            </a>
+          </p>
         </div>
       </div>
-    </div>
+    </>
   );
 }

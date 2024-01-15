@@ -14,6 +14,8 @@ import Usage from './pages/usage/Usage';
 import CVSHome from './pages/cvs/cvs_home/CVSHome';
 import CVSInput from './pages/cvs/cvs_input/CVSInput';
 import CameraComponent from './components/Camera';
+import AboutHome from './pages/about/AboutHome';
+import HelpHome from './pages/help/HelpHome';
 
 function App() {
   return (
@@ -21,16 +23,18 @@ function App() {
       <Router>
         <div>
           <Routes>
-            {/* <Route path='/' element={<Home />} /> */}
-            <Route path='/' element={<Navigate to="/login" />} />
+            <Route path='/' element={<Home />} />
+            {/* <Route path='/' element={<Navigate to="/login" />} /> */}
             <Route path='/login' element={<Login />} />
             <Route path='/signup' element={<Signup />} />
             <Route path='/dashboard' element={<Dashboard />} />
             <Route path='/profile' element={<Profile />} />
             <Route path='/settings' element={<Settings />} />
             <Route path='/help' element={<Help />} />
+            <Route path='/help-home' element={<HelpHome/>} />
             <Route path='/contacts' element={<Contacts />} />
             <Route path='/about' element={<About />} />
+            <Route path='/about-home' element={<AboutHome />} />
             <Route path='/health' element={<Health />} />
             <Route path='/usage' element={<Usage />} />
             <Route path='/cvs-home' element={<CVSHome />} />

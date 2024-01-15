@@ -1,24 +1,24 @@
 import React from "react";
-import Container from 'react-bootstrap/Container';
-import Navbar from 'react-bootstrap/Navbar';
-import './FooterCommon.css';
+import { Popover } from '@headlessui/react'
 
 export default function FooterCommon() {
     return (
-        <div className="footer-common">
-            <Navbar className="footer-font">
-                <Container className="d-flex justify-content-center align-items-center">
-                    <Navbar.Brand href="/dashboard">
-                        <img
-                            alt=""
-                            src="/images/noobzlogo.png"
-                            width="120"
-                            height="60"
-                            className="d-inline-block align-top"
-                        />{' '}
-                    </Navbar.Brand>
-                </Container>
-            </Navbar>
-        </div>
+        <>
+            <footer className="bg-white">
+                <nav className="mx-auto flex flex-col items-center justify-between p-6 lg:px-8" aria-label="Global">
+                    <Popover.Group className="flex flex-col items-center gap-y-2 lg:flex-row lg:gap-x-12 lg:items-center">
+                        <a href="/about" className="text-sm font-semibold leading-6 text-gray-900">
+                            About
+                        </a>
+                        <a href="/contacts" className="text-sm font-semibold leading-6 text-gray-900">
+                            Contact Us
+                        </a>
+                        <a href="/help" className="text-sm font-semibold leading-6 text-gray-900">
+                            Help
+                        </a>
+                    </Popover.Group>
+                </nav>
+            </footer>
+        </>
     );
 }
