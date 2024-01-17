@@ -4,6 +4,7 @@ import FooterCommon from '../../components/FooterCommon'
 import { useNavigate } from "react-router-dom";
 import PostService from "../../services/post.service";
 import AuthService from "../../services/auth.service";
+import { DatePicker } from '@gsebdev/react-simple-datepicker';
 
 export default function Profile() {
   const [name, setName] = useState([""]);
@@ -217,7 +218,7 @@ export default function Profile() {
                           type="text"
                           value={newname}
                           onChange={(e) => setNewName(e.target.value)}
-                          className="truncate leading-6 text-gray-700 focus:outline-none "
+                          className="truncate leading-6 text-gray-700 focus:outline-none rounded-md"
                         />
                       </div>
                     </div>
@@ -226,7 +227,16 @@ export default function Profile() {
                         Cancel
                       </button>
                       <button onClick={handleChangeName} className="ml-2 text-indigo-600 hover:text-indigo-500 focus:outline-none">
-                        Save
+                        {loading && (
+                          <span
+                            as="span"
+                            animation="grow"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                          />
+                        )}
+                        {loading ? ' Loading...' : 'Save'}
                       </button>
                     </div>
                   </div>
@@ -297,7 +307,7 @@ export default function Profile() {
                           type="text"
                           value={newemail}
                           onChange={(e) => setNewEmail(e.target.value)}
-                          className="truncate leading-6 text-gray-700 focus:outline-none"
+                          className="truncate leading-6 text-gray-700 focus:outline-none rounded-md"
                         />
                       </div>
                     </div>
@@ -306,7 +316,16 @@ export default function Profile() {
                         Cancel
                       </button>
                       <button onClick={handleChangeEmail} className="ml-2 text-indigo-600 hover:text-indigo-500 focus:outline-none">
-                        Save
+                        {loading && (
+                          <span
+                            as="span"
+                            animation="grow"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                          />
+                        )}
+                        {loading ? ' Loading...' : 'Save'}
                       </button>
                     </div>
                   </div>
@@ -337,7 +356,7 @@ export default function Profile() {
                           type="text"
                           value={newcontact}
                           onChange={(e) => setNewContact(e.target.value)}
-                          className="truncate leading-6 text-gray-700 focus:outline-none"
+                          className="truncate leading-6 text-gray-700 focus:outline-none rounded-md"
                         />
                       </div>
                     </div>
@@ -346,7 +365,16 @@ export default function Profile() {
                         Cancel
                       </button>
                       <button onClick={handleChangeContact} className="ml-2 text-indigo-600 hover:text-indigo-500 focus:outline-none">
-                        Save
+                        {loading && (
+                          <span
+                            as="span"
+                            animation="grow"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                          />
+                        )}
+                        {loading ? ' Loading...' : 'Save'}
                       </button>
                     </div>
                   </div>
@@ -373,11 +401,11 @@ export default function Profile() {
                   <div className="flex items-center justify-between py-4 pl-4 pr-5 text-sm leading-6">
                     <div className="flex w-0 flex-1 items-center">
                       <div className="flex min-w-0 flex-1 gap-2">
-                        <input
-                          type="text"
+                        <DatePicker
+                          id="datepicker-id"
+                          name="birthday"
+                          onChange={(date) => setNewBirthday(date.target.value)}
                           value={newbirthday}
-                          onChange={(e) => setNewBirthday(e.target.value)}
-                          className="truncate leading-6 text-gray-700 focus:outline-none"
                         />
                       </div>
                     </div>
@@ -386,7 +414,16 @@ export default function Profile() {
                         Cancel
                       </button>
                       <button onClick={handleChangeBirthday} className="ml-2 text-indigo-600 hover:text-indigo-500 focus:outline-none">
-                        Save
+                        {loading && (
+                          <span
+                            as="span"
+                            animation="grow"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                          />
+                        )}
+                        {loading ? ' Loading...' : 'Save'}
                       </button>
                     </div>
                   </div>

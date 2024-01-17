@@ -12,10 +12,13 @@ Install chart.js: npm install chart.js react-chartjs-2
 
 Install font-awesome: npm install @fortawesome/react-fontawesome @fortawesome/free-brands-svg-icons
 
+Install: npm install sass node-sass
+
+Install: npm install @gsebdev/react-simple-datepicker
+
 Change URL in auth.service.js and post.service.js files
 
 
 <!-- 
-TODO: Change graph styling 
-TODO: Remove unused images 
+TODO: Create critical alerts
 -->

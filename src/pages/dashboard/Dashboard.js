@@ -231,7 +231,7 @@ export default function Dashboard() {
             <span className='text-lg'><b>User:</b> <i>{username}</i></span>
           </div>
           <div className="sm:col-span-2 max-w-7xl py-6 px-8 bg-gray-200 bg-opacity-30 rounded-md">
-            <span className='text-lg'><b>Current Distance to the screen:</b> {distance.toFixed(2)} cm</span>
+            <span className='text-lg'><b>Distance to the screen:</b> {distance.toFixed(2)} cm</span>
           </div>
           <div className="sm:col-span-2 max-w-7xl py-6 px-8 bg-gray-200 bg-opacity-30 rounded-md">
             <span className='text-lg'><b>Interaction Time:</b> {formatTime(interactionTime)}</span>

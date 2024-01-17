@@ -56,7 +56,8 @@ export default function CVSInput() {
           handleShow();
         },
           (error) => {
-            alert(error.response.data.message)
+            setCVSPercentage('Oops! Something went wrong!')
+            handleShow();
           }
         );
     } catch (err) {
