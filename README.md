@@ -22,4 +22,5 @@ Change URL in auth.service.js and post.service.js files
 <!-- 
 TODO: Create critical alerts
 TODO: Send db request when reloaded or navigated
+TODO: Add safe distance and interaction time in settings
 -->

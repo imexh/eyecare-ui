@@ -7,6 +7,8 @@ import CameraComponent from '../../components/CameraWithoutMesh';
 import postService from '../../services/post.service';
 import BarChart from '../../components/charts/BarChart';
 
+const criticalSoundUrl = 'http://commondatastorage.googleapis.com/codeskulptor-assets/week7-button.m4a';
+
 export default function Dashboard() {
   const [username, setUsername] = useState([""]);
   const [date, setDate] = useState([""]);
@@ -16,6 +18,10 @@ export default function Dashboard() {
   const [eyeInteraction, setEyeInteraction] = useState("No");
   const [interactionTime, setInteractionTime] = useState(0.0);
   const [distancesDuringInteraction, setDistancesDuringInteraction] = useState([]);
+
+  const [criticalStatus, setCriticalStatus] = useState(false); // Handle critical status
+  const [playCriticalSound, setPlayCriticalSound] = useState(false);
+  const [criticalMessage, setCriticalMessage] = useState("Safe");
 
   const [labels, setLabels] = useState(["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]);
   const [distanceData, setDistanceData] = useState([]);
@@ -170,24 +176,7 @@ export default function Dashboard() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [eyeInteraction, interactionTime, date, username]);
 
-  // Function to calculate interaction time (Without 5 seconds timer to reset)
-  // useEffect(() => {
-  //   let timer;
-
-  //   if (isCameraActive) {
-  //     timer = setInterval(() => {
-  //       setInteractionTime((prevInteractionTime) => prevInteractionTime + 1);
-  //     }, 1000);
-  //   } else {
-  //     clearInterval(timer);
-  //     setInteractionTime(0);
-  //   }
-
-  //   return () => clearInterval(timer);
-  // }, [isCameraActive]);
-
   // Function to format seconds to minutes and hours
-
   const formatTime = (seconds) => {
     const hours = Math.floor(seconds / 3600);
     const minutes = Math.floor((seconds % 3600) / 60);
@@ -209,6 +198,36 @@ export default function Dashboard() {
     setCameraActive(prevState => !prevState);
     setDistance(0.0)
   };
+
+  // Function to play sound
+  useEffect(() => {
+    if (criticalStatus) {
+      setPlayCriticalSound(true);
+    } else {
+      setPlayCriticalSound(false);
+    }
+  }, [criticalStatus]);
+
+  // Function to play sound
+  useEffect(() => {
+    if (playCriticalSound) {
+      const audio = new Audio(criticalSoundUrl);
+      audio.play();
+
+      setPlayCriticalSound(false);
+    }
+  }, [playCriticalSound]);
+
+  // Handle critical status currently at 10 secs
+  useEffect(() => {
+    if (interactionTime > 10.0) {
+      setCriticalMessage("Critical"); // Change message according to distance and time
+      setCriticalStatus(true);
+    } else {
+      setCriticalMessage("Safe")
+      setCriticalStatus(false);
+    }
+  }, [interactionTime]);
 
   return (
     <>
@@ -247,10 +266,17 @@ export default function Dashboard() {
             <p className='text-lg'>Eyes Interacting?</p>
             <p className='text-3xl'><b>{eyeInteraction}</b></p>
           </div>
-          <div className="sm:col-span-2 max-w-7xl py-6 px-8 bg-red-600 rounded-md h-60 flex items-center justify-center flex-col">
-            <p className='text-lg'>Status</p>
-            <p className='text-3xl'><b>Critical</b></p>
-          </div>
+          {criticalStatus ? (
+            <div className="sm:col-span-2 max-w-7xl py-6 px-8 bg-red-600 rounded-md h-60 flex items-center justify-center flex-col">
+              <p className='text-lg'>Status</p>
+              <p className='text-3xl'><b>{criticalMessage}</b></p>
+            </div>
+          ) : (
+            <div className="sm:col-span-2 max-w-7xl py-6 px-8 bg-green-600 rounded-md h-60 flex items-center justify-center flex-col">
+              <p className='text-lg'>Status</p>
+              <p className='text-3xl'><b>{criticalMessage}</b></p>
+            </div>
+          )}
           <div className="sm:col-span-2 max-w-7xl py-6 lg:px-8 bg-gray-400 rounded-md flex items-center justify-center h-60">
             {isCameraActive ? (
               <CameraComponent onDistanceChange={handleDistanceChange} />
