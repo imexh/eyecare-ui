@@ -86,6 +86,42 @@ const calculateCvsPercentage = (age, gender, averageHours, eyeDisease, contactLe
     );
 };
 
+const getInteractionTimeLimit = (username) => {
+    return axios.get(API_URL + "/interaction-time-limit", { params: { username }, headers: authHeader() });
+};
+
+const getDistanceRange = (username) => {
+    return axios.get(API_URL + "/distance-range", { params: { username }, headers: authHeader() });
+};
+
+const saveInteractionTimeLimit = (username, interactionTimeLimit) => {
+    return axios.post(API_URL + "/set-interaction-time-limit",
+        { username, interactionTimeLimit },
+        { headers: authHeader() }
+    );
+};
+
+const saveDistanceRange = (username, minimumDistance, maximumDistance) => {
+    return axios.post(API_URL + "/set-distance-range",
+        { username, minimumDistance, maximumDistance },
+        { headers: authHeader() }
+    );
+};
+
+const saveDefaultDistanceRange = (username) => {
+    return axios.post(API_URL + "/default/set-distance-range",
+        { username },
+        { headers: authHeader() }
+    );
+};
+
+const saveDefaultInteractionTimeLimit = (username) => {
+    return axios.post(API_URL + "/default/set-interaction-time-limit",
+        { username },
+        { headers: authHeader() }
+    );
+};
+
 const postService = {
     getHelpText,
     getContacts,
@@ -102,7 +138,13 @@ const postService = {
     getPreviousWeeklyDistances,
     getPreviousWeeklyInteractionTimes,
     getHealthTips,
-    calculateCvsPercentage
+    calculateCvsPercentage,
+    getInteractionTimeLimit,
+    getDistanceRange,
+    saveInteractionTimeLimit,
+    saveDistanceRange,
+    saveDefaultDistanceRange,
+    saveDefaultInteractionTimeLimit
 };
 
 export default postService;
