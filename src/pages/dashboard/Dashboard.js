@@ -237,18 +237,19 @@ export default function Dashboard() {
     setDistance(0.0)
   };
 
+  // Uncomment to play sound
   // Function to play sound
-  useEffect(() => {
-    try {
-      if (criticalStatus) {
-        setPlayCriticalSound(true);
-      } else {
-        setPlayCriticalSound(false);
-      }
-    } catch (err) {
-      console.log(err);
-    }
-  }, [criticalStatus]);
+  // useEffect(() => {
+  //   try {
+  //     if (criticalStatus) {
+  //       setPlayCriticalSound(true);
+  //     } else {
+  //       setPlayCriticalSound(false);
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }, [criticalStatus]);
 
   // Function to play sound
   useEffect(() => {
@@ -266,6 +267,7 @@ export default function Dashboard() {
     }
   }, [playCriticalSound]);
 
+  // Make this more accurate
   // Handle critical status currently at 10 secs
   useEffect(() => {
     if (interactionTime > interactionTimeLimit) {
