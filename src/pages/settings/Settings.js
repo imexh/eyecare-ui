@@ -56,7 +56,7 @@ export default function Settings() {
   }, [navigate]);
 
   const handleInteractionTimeLimitEditClick = () => {
-    setNewInteractionTimeLimit(interactionTimeLimit);
+    setNewInteractionTimeLimit(interactionTimeLimit / 60);
     setIsInteractionTimeLimitEditing(true);
   };
 
@@ -89,7 +89,7 @@ export default function Settings() {
             }
           );
       } else {
-        await PostService.saveInteractionTimeLimit(currentUser, newInteractionTimeLimit)
+        await PostService.saveInteractionTimeLimit(currentUser, newInteractionTimeLimit * 60)
           .then(() => {
             window.location.reload();
           },
@@ -141,50 +141,6 @@ export default function Settings() {
     }
   };
 
-  const handleChangeDefaultInteractionTimeLimit = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const currentUser = AuthService.getCurrentUser().username;
-      await PostService.saveDefaultInteractionTimeLimit(currentUser)
-        .then(() => {
-          window.location.reload();
-        },
-          (error) => {
-            alert(error.response.data.message)
-          }
-        );
-    } catch (err) {
-      console.error("Error updating interaction time limit:", err);
-      alert("Failed to update interaction time limit. Please try again.");
-    } finally {
-      setLoading(false);
-      setIsInteractionTimeLimitEditing(false);
-    }
-  };
-
-  const handleChangeDefaultDistanceRange = async (e) => {
-    e.preventDefault();
-    setLoading(true);
-    try {
-      const currentUser = AuthService.getCurrentUser().username;
-      await PostService.saveDefaultDistanceRange(currentUser)
-        .then(() => {
-          window.location.reload();
-        },
-          (error) => {
-            alert(error.response.data.message)
-          }
-        );
-    } catch (err) {
-      console.error("Error updating distance range:", err);
-      alert("Failed to update distance. Please try again.");
-    } finally {
-      setLoading(false);
-      setIsDistanceRangeEditing(false);
-    }
-  };
-
   const handleInteractionTimeSelectionChange = (e) => {
     setInteractionTimeSelection(e.target.value);
   }
@@ -197,7 +153,7 @@ export default function Settings() {
     <>
       <NavBarCommon />
 
-      <div className='mx-auto mx-auto px-24 mt-8 mb-8' style={{ minHeight: '75vh' }}>
+      <div className='mx-auto mx-auto px-24 mt-8 mb-8' style={{ minHeight: '100vh' }}>
         <div className="px-4 sm:px-0">
           <h3 className="font-semibold leading-7 text-gray-900 text-3xl">Settings</h3>
           <p className="mt-1 max-w-2xl text-xl leading-6 text-gray-500">General Settings.</p>
@@ -205,7 +161,7 @@ export default function Settings() {
         <div className="mt-6 border-t border-gray-100">
           <dl className="divide-y divide-gray-100">
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-lg font-medium leading-6 text-gray-900">Critical time for Interaction Time</dt>
+              <dt className="text-lg font-medium leading-6 text-gray-900">Critical time for Interaction Time Warning</dt>
               <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                 {isInteractionTimeLimitEditing ? (
                   <div className="flex items-center justify-between py-4 pr-5 text-sm leading-6">
@@ -232,7 +188,7 @@ export default function Settings() {
                         {interactionTimeSelection === "Other" && (
                           <div className="sm:col-span-2">
                             <label htmlFor="age" className="block text-sm font-medium leading-6 text-gray-900">
-                              Interaction Time Limit (Sec)
+                              Interaction Time Limit (Min)
                             </label>
                             <div className="mt-2">
                               <input
@@ -270,7 +226,7 @@ export default function Settings() {
                   <li className="flex items-center justify-between pl-4 pr-5 text-sm leading-6">
                     <div className="flex w-0 flex-1 items-center">
                       <div className="flex min-w-0 flex-1 gap-2">
-                        <span className="truncate leading-6 text-gray-700 text-lg">{interactionTimeLimit} sec</span>
+                        <span className="truncate leading-6 text-gray-700 text-lg">{interactionTimeLimit / 60} mins</span>
                       </div>
                     </div>
                     <div className="ml-4 flex-shrink-0">
@@ -283,11 +239,11 @@ export default function Settings() {
               </dd>
             </div>
             <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-              <dt className="text-lg font-medium leading-6 text-gray-900">Critical range for Distances</dt>
+              <dt className="text-lg font-medium leading-6 text-gray-900">Critical range for Distance Warning</dt>
               <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
                 {isDistanceRangeEditing ? (
                   <div className="flex items-center justify-between py-4 pr-5 text-sm leading-6">
-                    <div className="flex min-w-0 flex-1 gap-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+                    <div className="flex min-w-0 flex-1 gap-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 mr-6">
                       <div className="sm:col-span-2">
                         <label htmlFor="distanceRangeSelection" className="block text-sm font-medium leading-6 text-gray-900">
                           Distance Range Selection
@@ -363,8 +319,8 @@ export default function Settings() {
                   <li className="flex items-center justify-between pl-4 pr-5 text-sm leading-6">
                     <div className="flex w-0 flex-1 items-center">
                       <div className="flex min-w-0 flex-1 gap-2">
-                        <span className="truncate leading-6 text-gray-700 text-lg">Minimum distance: {minimumDistance}cm</span>
-                        <span className="truncate leading-6 text-gray-700 text-lg">Maximum distance: {maximumDistance}cm</span>
+                        <span className="truncate leading-6 text-gray-700 text-lg">Min: {minimumDistance} cm</span><br/>
+                        <span className="truncate leading-6 text-gray-700 text-lg">Max: {maximumDistance} cm</span>
                       </div>
                     </div>
                     <div className="ml-4 flex-shrink-0">
