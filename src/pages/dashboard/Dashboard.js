@@ -27,6 +27,10 @@ export default function Dashboard() {
   const [distanceData, setDistanceData] = useState([]);
   const [interactionData, setInteractionData] = useState([]);
 
+  const [interactionTimeLimit, setInteractionTimeLimit] = useState([]);
+  const [minimumDistanceLimit, setMinimumDistanceLimit] = useState([]);
+  const [maximumDistanceLimit, setMaximumDistanceLimit] = useState([]);
+
   const navigate = useNavigate();
 
   // Function to calculate today's date and get current user's username
@@ -49,6 +53,40 @@ export default function Dashboard() {
       }
     };
     fetchData();
+  }, [navigate]);
+
+  // Function to get intercationTimeLimit and distanceRange
+  useEffect(() => {
+    if (AuthService.getCurrentUser() == null) {
+      navigate("/login");
+    } else {
+      const currentUser = AuthService.getCurrentUser().username;
+      postService.getInteractionTimeLimit(currentUser)
+        .then((response) => {
+          setInteractionTimeLimit(response.data.interactionTimeLimit.interactionTimeLimit);
+        })
+        .catch((error) => {
+          console.log("Private page", error.response);
+          if (error.response && error.response.status === 403) {
+            AuthService.logout();
+            navigate("/login");
+            window.location.reload();
+          }
+        });
+      postService.getDistanceRange(currentUser)
+        .then((response) => {
+          setMinimumDistanceLimit(response.data.distanceRange.minimumDistance);
+          setMaximumDistanceLimit(response.data.distanceRange.maximumDistance);
+        })
+        .catch((error) => {
+          console.log("Private page", error.response);
+          if (error.response && error.response.status === 403) {
+            AuthService.logout();
+            navigate("/login");
+            window.location.reload();
+          }
+        });
+    }
   }, [navigate]);
 
   // Function to populate graphs
@@ -201,33 +239,50 @@ export default function Dashboard() {
 
   // Function to play sound
   useEffect(() => {
-    if (criticalStatus) {
-      setPlayCriticalSound(true);
-    } else {
-      setPlayCriticalSound(false);
+    try {
+      if (criticalStatus) {
+        setPlayCriticalSound(true);
+      } else {
+        setPlayCriticalSound(false);
+      }
+    } catch (err) {
+      console.log(err);
     }
   }, [criticalStatus]);
 
   // Function to play sound
   useEffect(() => {
-    if (playCriticalSound) {
-      const audio = new Audio(criticalSoundUrl);
-      audio.play();
+    try {
+      if (playCriticalSound) {
+        const audio = new Audio(criticalSoundUrl);
+        audio.play().catch(error => {
+          console.error("Failed to play sound:", error);
+        });;
 
-      setPlayCriticalSound(false);
+        setPlayCriticalSound(false);
+      }
+    } catch (err) {
+      console.log(err);
     }
   }, [playCriticalSound]);
 
   // Handle critical status currently at 10 secs
   useEffect(() => {
-    if (interactionTime > 10.0) {
-      setCriticalMessage("Critical"); // Change message according to distance and time
+    if (interactionTime > interactionTimeLimit) {
+      setCriticalMessage("Take a break!"); // Change message according to distance and time
+      setCriticalStatus(true);
+    } else if (distance.toFixed(2) > maximumDistanceLimit && eyeInteraction === "Yes") {
+      setCriticalMessage("Move closer!"); // Change message according to distance and time
+      setCriticalStatus(true);
+    }
+    else if (distance.toFixed(2) < minimumDistanceLimit && eyeInteraction === "Yes") {
+      setCriticalMessage("Move further!"); // Change message according to distance and time
       setCriticalStatus(true);
     } else {
       setCriticalMessage("Safe")
       setCriticalStatus(false);
     }
-  }, [interactionTime]);
+  }, [interactionTime, distance, interactionTimeLimit, minimumDistanceLimit, maximumDistanceLimit, eyeInteraction]);
 
   return (
     <>
