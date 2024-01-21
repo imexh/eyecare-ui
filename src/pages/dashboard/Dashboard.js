@@ -19,9 +19,10 @@ export default function Dashboard() {
   const [interactionTime, setInteractionTime] = useState(0.0);
   const [distancesDuringInteraction, setDistancesDuringInteraction] = useState([]);
 
-  const [criticalStatus, setCriticalStatus] = useState(false); // Handle critical status
+  const [criticalStatus, setCriticalStatus] = useState(false);
   const [playCriticalSound, setPlayCriticalSound] = useState(false);
   const [criticalMessage, setCriticalMessage] = useState("Safe");
+  const [soundStatus, setSoundStatus] = useState("");
 
   const [labels, setLabels] = useState(["Mon", "Tue", "Wed", "Thur", "Fri", "Sat", "Sun"]);
   const [distanceData, setDistanceData] = useState([]);
@@ -55,7 +56,7 @@ export default function Dashboard() {
     fetchData();
   }, [navigate]);
 
-  // Function to get intercationTimeLimit and distanceRange
+  // Function to get intercationTimeLimit and distanceRange and soundStatus
   useEffect(() => {
     if (AuthService.getCurrentUser() == null) {
       navigate("/login");
@@ -77,6 +78,18 @@ export default function Dashboard() {
         .then((response) => {
           setMinimumDistanceLimit(response.data.distanceRange.minimumDistance);
           setMaximumDistanceLimit(response.data.distanceRange.maximumDistance);
+        })
+        .catch((error) => {
+          console.log("Private page", error.response);
+          if (error.response && error.response.status === 403) {
+            AuthService.logout();
+            navigate("/login");
+            window.location.reload();
+          }
+        });
+      postService.getSoundStatus(currentUser)
+        .then((response) => {
+          setSoundStatus(response.data.soundStatus.status);
         })
         .catch((error) => {
           console.log("Private page", error.response);
@@ -237,19 +250,18 @@ export default function Dashboard() {
     setDistance(0.0)
   };
 
-  // Uncomment to play sound
   // Function to play sound
-  // useEffect(() => {
-  //   try {
-  //     if (criticalStatus) {
-  //       setPlayCriticalSound(true);
-  //     } else {
-  //       setPlayCriticalSound(false);
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }, [criticalStatus]);
+  useEffect(() => {
+    try {
+      if (criticalStatus && soundStatus === "ON") {
+        setPlayCriticalSound(true);
+      } else {
+        setPlayCriticalSound(false);
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  }, [criticalStatus, soundStatus]);
 
   // Function to play sound
   useEffect(() => {

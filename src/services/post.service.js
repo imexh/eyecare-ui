@@ -122,6 +122,17 @@ const saveDefaultInteractionTimeLimit = (username) => {
     );
 };
 
+const getSoundStatus = (username) => {
+    return axios.get(API_URL + "/sound-status", { params: { username }, headers: authHeader() });
+};
+
+const saveSoundStatus = (username, status) => {
+    return axios.post(API_URL + "/set-sound-status",
+        { username, status },
+        { headers: authHeader() }
+    );
+};
+
 const postService = {
     getHelpText,
     getContacts,
@@ -144,7 +155,9 @@ const postService = {
     saveInteractionTimeLimit,
     saveDistanceRange,
     saveDefaultDistanceRange,
-    saveDefaultInteractionTimeLimit
+    saveDefaultInteractionTimeLimit,
+    getSoundStatus,
+    saveSoundStatus
 };
 
 export default postService;

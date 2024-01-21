@@ -18,6 +18,10 @@ export default function Settings() {
   const [isDistanceRangeEditing, setIsDistanceRangeEditing] = useState(false);
   const [distanceRangeSelection, setDistanceRangeSelection] = useState("Default");
 
+  const [soundStatus, setSoundStatus] = useState();
+  const [isSoundStatusEditing, setIsSoundStatusEditing] = useState(false);
+  const [soundStatusSelection, setSoundStatusSelection] = useState("OFF");
+
   const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
@@ -43,6 +47,18 @@ export default function Settings() {
         .then((response) => {
           setMinimumDistance(response.data.distanceRange.minimumDistance);
           setMaximumDistance(response.data.distanceRange.maximumDistance);
+        })
+        .catch((error) => {
+          console.log("Private page", error.response);
+          if (error.response && error.response.status === 403) {
+            AuthService.logout();
+            navigate("/login");
+            window.location.reload();
+          }
+        });
+      PostService.getSoundStatus(currentUser)
+        .then((response) => {
+          setSoundStatus(response.data.soundStatus.status);
         })
         .catch((error) => {
           console.log("Private page", error.response);
@@ -148,6 +164,40 @@ export default function Settings() {
   const handleDistanceRangeSelectionChange = (e) => {
     setDistanceRangeSelection(e.target.value);
   }
+
+  const handleSoundStatusEditClick = () => {
+    setIsSoundStatusEditing(true);
+  };
+
+  const handleSoundStatusCancelClick = () => {
+    setIsSoundStatusEditing(false);
+  };
+
+  const handleSoundStatusSelectionChange = (e) => {
+    setSoundStatusSelection(e.target.value);
+  }
+
+  const handleChangeSoundStatus = async (e) => {
+    e.preventDefault();
+    setLoading(true);
+    try {
+      const currentUser = AuthService.getCurrentUser().username;
+      await PostService.saveSoundStatus(currentUser, soundStatusSelection)
+        .then(() => {
+          window.location.reload();
+        },
+          (error) => {
+            alert(error.response.data.message)
+          }
+        );
+    } catch (err) {
+      console.error("Error updating sound status:", err);
+      alert("Failed to update sound status. Please try again.");
+    } finally {
+      setLoading(false);
+      setIsSoundStatusEditing(false);
+    }
+  };
 
   return (
     <>
@@ -319,7 +369,7 @@ export default function Settings() {
                   <li className="flex items-center justify-between pl-4 pr-5 text-sm leading-6">
                     <div className="flex w-0 flex-1 items-center">
                       <div className="flex min-w-0 flex-1 gap-2">
-                        <span className="truncate leading-6 text-gray-700 text-lg">Min: {minimumDistance} cm</span><br/>
+                        <span className="truncate leading-6 text-gray-700 text-lg">Min: {minimumDistance} cm</span><br />
                         <span className="truncate leading-6 text-gray-700 text-lg">Max: {maximumDistance} cm</span>
                       </div>
                     </div>
@@ -332,6 +382,64 @@ export default function Settings() {
                 )}
               </dd>
             </div>
+            <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+              <dt className="text-lg font-medium leading-6 text-gray-900">Critical warning sounds</dt>
+              <dd className="mt-2 text-sm text-gray-900 sm:col-span-2 sm:mt-0">
+                {isSoundStatusEditing ? (
+                  <div className="flex items-center justify-between py-4 pr-5 text-sm leading-6">
+                    <div className="flex min-w-0 flex-1 gap-2 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6 mr-6">
+                      <div className="sm:col-span-2">
+                        <label htmlFor="soundStatusSelection" className="block text-sm font-medium leading-6 text-gray-900">
+                          Sound Status
+                        </label>
+                        <div className="mt-2">
+                          <select
+                            id="soundStatusSelection"
+                            name="soundStatusSelection"
+                            onChange={handleSoundStatusSelectionChange}
+                            value={soundStatusSelection}
+                            autoComplete="soundStatusSelection"
+                            className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+                          >
+                            <option value="OFF">OFF</option>
+                            <option value="ON">ON</option>
+                          </select>
+                        </div>
+                      </div>
+                    </div>
+                    <div classname="ml-4 flex-shrink-0">
+                      <button onClick={handleSoundStatusCancelClick} className="text-gray-500 hover:text-gray-700 focus:outline-none">
+                        Cancel
+                      </button>
+                      <button onClick={handleChangeSoundStatus} className="ml-2 text-indigo-600 hover:text-indigo-500 focus:outline-none">
+                        {loading && (
+                          <span
+                            as="span"
+                            animation="grow"
+                            size="sm"
+                            role="status"
+                            aria-hidden="true"
+                          />
+                        )}
+                        {loading ? ' Loading...' : 'Save'}
+                      </button>
+                    </div>
+                  </div>
+                ) : (
+                  <li className="flex items-center justify-between pl-4 pr-5 text-sm leading-6">
+                    <div className="flex w-0 flex-1 items-center">
+                      <div className="flex min-w-0 flex-1 gap-2">
+                        <span className="truncate leading-6 text-gray-700 text-lg">{soundStatus}</span><br />
+                      </div>
+                    </div>
+                    <div className="ml-4 flex-shrink-0">
+                      <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500" onClick={handleSoundStatusEditClick}>
+                        Change
+                      </a>
+                    </div>
+                  </li>
+                )}
+              </dd>            </div>
           </dl>
         </div>
       </div>
