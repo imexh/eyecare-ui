@@ -21,5 +21,4 @@ Change URL in auth.service.js and post.service.js files
 
 <!-- 
 TODO: Send db request when reloaded or navigated
-TODO: Add sound to settings
 -->
